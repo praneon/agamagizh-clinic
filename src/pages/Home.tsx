@@ -16,7 +16,7 @@ export default function Home() {
             <div className="relative group flex justify-center">
             <img 
               alt="Agamagizh Logo" 
-              className="block mx-auto object-contain transition-transform duration-700 group-hover:scale-110 h-64 w-64 sm:h-80 sm:w-80 md:h-[420px] md:w-[420px] lg:h-[512px] lg:w-[512px]" 
+              className="block mx-auto object-contain transition-transform duration-700 group-hover:scale-110 h-56 w-56 sm:h-64 sm:w-64 md:h-[260px] md:w-[260px] lg:h-[320px] lg:w-[320px]" 
               src="/Logo.svg"
             />
             <div className="absolute -inset-4 bg-surface-container-low rounded-full -z-10 opacity-50 blur-xl"></div>
