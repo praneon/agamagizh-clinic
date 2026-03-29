@@ -1,0 +1,7 @@
+{
+  "name": "Agamagizh Clinic",
+  "description": "A modern, compassionate healthcare center dedicated to your well-being. Providing expert medical care with a personal touch.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
