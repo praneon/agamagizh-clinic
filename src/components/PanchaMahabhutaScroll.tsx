@@ -55,10 +55,10 @@ export const PanchaMahabhutaScroll: React.FC = () => {
     >
       {/* Sticky Logo Container */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden pointer-events-none">
-        <div className="relative w-full max-w-6xl px-8 flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-24 pointer-events-auto">
+        <div className="relative w-full max-w-6xl h-full px-4 sm:px-8 flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24 pointer-events-auto">
           {/* Logo Section - Centered on mobile, Left on desktop */}
-          <div className="w-full lg:w-1/2 flex justify-center items-center">
-            <div className="w-full max-w-[460px] sm:max-w-[540px] lg:max-w-[690px]">
+          <div className="w-full lg:w-1/2 flex justify-center items-center flex-none">
+            <div className="w-[320px] sm:w-[380px] md:w-[440px] lg:w-full lg:max-w-[690px] origin-center scale-[2]">
               <Logo 
                 onElementClick={handleElementClick} 
                 activeElementId={activeElementId} 
@@ -68,8 +68,8 @@ export const PanchaMahabhutaScroll: React.FC = () => {
           </div>
 
           {/* Info Section (Floating) */}
-          <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-start">
-            <div className="relative w-full max-w-md">
+          <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-start flex-none">
+            <div className="relative w-full max-w-md min-h-[320px] sm:min-h-[340px]">
               <motion.div
                 key={activeElementId || 'intro'}
                 initial={{ opacity: 0, x: 20 }}

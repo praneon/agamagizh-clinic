@@ -37,8 +37,9 @@ export default function Footer() {
         <div className="flex flex-col items-center md:items-start">
           <h4 className="font-headline font-bold text-slate-800 dark:text-slate-200 mb-6 text-sm uppercase tracking-widest">Location</h4>
           <p className="font-body text-sm text-slate-600 dark:text-slate-400 mb-4">
-            123 Healing Path, Sanctuary District<br/>
-            Peaceful Valley, Wellness State
+            No 243 2, Near MRN Nagar, Durugam Road,<br/>
+            Puthumariyamman Kovil Street, Raja Nagar,<br/>
+            Kallakurichi - 606202, Tamil Nadu.
           </p>
           <div className="flex space-x-4 justify-center md:justify-start">
             <a className="text-[#5948d3] hover:opacity-80 transition-opacity" href="#"><span className="material-symbols-outlined">public</span></a>
