@@ -5,28 +5,30 @@ export default function Home() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 overflow-hidden">
+      <section className="relative min-h-screen flex flex-col items-center justify-start sm:justify-center pt-28 sm:pt-24 overflow-hidden">
         {/* Subtle Abstract Background Shapes */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary element-blob rounded-full"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary element-blob rounded-full"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-tertiary element-blob rounded-full opacity-5"></div>
         
-        <div className="z-10 text-center px-6">
-          <div className="inline-block relative group mb-4">
+        <div className="z-10 w-full text-center px-4 sm:px-6 mt-4 sm:mt-0">
+          <div className="relative mb-4 flex w-full justify-center">
+            <div className="relative group flex justify-center">
             <img 
               alt="Agamagizh Logo" 
-              className="object-contain transition-transform duration-700 group-hover:scale-110 h-[512px] w-[512px]" 
-              src="https://lh3.googleusercontent.com/aida/ADBb0ui5G630mJtDya06MNYOgovPWloFZqrTOCpXDcNnqFkdGqYDnmDvpluCnmCaVwSnlDcZqpFXFCrLtHg2R6K3rSXGu6O2Ib2V1oV7piPcLq5qdFzD6Gj20pI2-k5O1rCSt2Bpt9cmgC1XC6wHlWLvcO-1C-aDEd375yvyMmEcgy-awThijo7bpQe_KvdG-iUoquNboFUn8curOkAi-lcIKHfDPrByp0N1J1CLO8eAJfoz5LNpIeDkeHPC8m_A1dTc4IEgULXq3H6w1g"
+              className="block mx-auto object-contain transition-transform duration-700 group-hover:scale-110 h-64 w-64 sm:h-80 sm:w-80 md:h-[420px] md:w-[420px] lg:h-[512px] lg:w-[512px]" 
+              src="/Logo.svg"
             />
             <div className="absolute -inset-4 bg-surface-container-low rounded-full -z-10 opacity-50 blur-xl"></div>
+            </div>
           </div>
           
-          <h1 className="font-headline text-5xl md:text-7xl font-bold text-on-surface tracking-tighter mb-6">
+          <h1 className="font-headline text-4xl sm:text-5xl md:text-7xl font-bold text-on-surface tracking-tighter mb-6">
             Agamagizh: Restoring <br/>
             <span className="text-primary italic">Inner Happiness</span>
           </h1>
           
-          <p className="font-body text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed mb-12">
+          <p className="font-body text-lg sm:text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed mb-10 sm:mb-12">
             A sanctuary where the precision of naturopathic science meets the ethereal serenity of yoga. We heal by harmonizing the five fundamental elements within you.
           </p>
           

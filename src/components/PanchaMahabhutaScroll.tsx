@@ -58,7 +58,7 @@ export const PanchaMahabhutaScroll: React.FC = () => {
         <div className="relative w-full max-w-6xl h-full px-4 sm:px-8 flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24 pointer-events-auto">
           {/* Logo Section - Centered on mobile, Left on desktop */}
           <div className="w-full lg:w-1/2 flex justify-center items-center flex-none">
-            <div className="w-[320px] sm:w-[380px] md:w-[440px] lg:w-full lg:max-w-[690px] origin-center scale-[2]">
+            <div className="w-[240px] sm:w-[290px] md:w-[340px] lg:w-full lg:max-w-[520px] origin-center scale-[1.35]">
               <Logo 
                 onElementClick={handleElementClick} 
                 activeElementId={activeElementId} 

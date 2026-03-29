@@ -2,7 +2,7 @@ import { ChevronDown, Sparkles, Sprout, Waves } from 'lucide-react';
 
 export default function AboutUs() {
   return (
-    <main className="bg-surface-container-lowest text-on-surface font-body selection:bg-primary/20 pt-24">
+    <main className="overflow-x-hidden bg-surface-container-lowest pt-24 font-body text-on-surface selection:bg-primary/20">
       {/* Section 1: Hero */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-surface-container-lowest">
         <div className="absolute inset-0 z-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
@@ -13,15 +13,15 @@ export default function AboutUs() {
             referrerPolicy="no-referrer"
           />
         </div>
-        <div className="relative z-10 max-w-5xl mx-auto px-8 text-center">
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 md:px-8 text-center">
           <span className="font-headline font-bold text-primary tracking-[0.2em] uppercase text-xs mb-6 block">
             The Clinical Sanctuary
           </span>
-          <h1 className="font-headline font-extrabold text-5xl md:text-7xl text-on-surface leading-[1.1] mb-8 tracking-tight">
+          <h1 className="font-headline font-extrabold text-4xl sm:text-5xl md:text-7xl text-on-surface leading-[1.1] mb-8 tracking-tight">
             Beyond Healing - <br />
             <span className="text-primary-dim">A Journey to Inner Happiness</span>
           </h1>
-          <p className="max-w-2xl mx-auto text-on-surface-variant text-lg md:text-xl leading-relaxed font-light">
+          <p className="max-w-2xl mx-auto text-on-surface-variant text-base sm:text-lg md:text-xl leading-relaxed font-light">
             At Agamagizh, we don&apos;t just treat symptoms. We restore the soulful balance between your body,
             mind, and the five eternal elements.
           </p>
@@ -32,9 +32,9 @@ export default function AboutUs() {
       </section>
 
       {/* Section 2: Our Essence */}
-      <section className="py-32 bg-surface-container-lowest">
-        <div className="max-w-7xl mx-auto px-8">
-          <div className="grid grid-cols-12 gap-12 items-center">
+      <section className="py-20 sm:py-24 md:py-32 bg-surface-container-lowest">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+          <div className="grid grid-cols-12 items-center gap-8 md:gap-12">
             <div className="col-span-12 md:col-span-5">
               <h2 className="font-headline font-bold text-4xl md:text-5xl text-on-surface mb-8 leading-tight">
                 The Soul of <br />
@@ -42,15 +42,15 @@ export default function AboutUs() {
               </h2>
             </div>
             <div className="col-span-12 md:col-span-7">
-              <div className="p-12 bg-surface-container-low rounded-xl relative">
-                <div className="absolute -top-6 -left-6 w-12 h-12 bg-primary flex items-center justify-center rounded-lg text-white font-headline font-bold text-2xl">
+              <div className="relative rounded-xl bg-surface-container-low p-6 sm:p-8 md:p-12">
+                <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary font-headline text-xl font-bold text-white sm:-left-6 sm:-top-6 sm:h-12 sm:w-12 sm:text-2xl">
                   அ
                 </div>
-                <p className="text-xl md:text-2xl font-light text-on-surface leading-relaxed italic mb-6">
+                <p className="mb-6 pt-12 text-lg font-light italic leading-relaxed text-on-surface sm:pt-2 sm:text-xl md:text-2xl">
                   &quot;Agamagizh is a profound Tamil word - a synthesis of &apos;Agam&apos; (Inner) and
                   &apos;Magizh&apos; (Happiness).&quot;
                 </p>
-                <p className="text-lg text-on-surface-variant leading-relaxed">
+                <p className="text-base leading-relaxed text-on-surface-variant sm:text-lg">
                   Our name reflects our clinical philosophy: that true health is not merely the absence of disease,
                   but the attainment of profound soulful joy. We serve as a sanctuary where clinical precision meets
                   the ethereal wisdom of ancient naturopathy.
@@ -62,8 +62,8 @@ export default function AboutUs() {
       </section>
 
       {/* Section 3: Our Pillars */}
-      <section className="py-32 bg-surface-container-lowest">
-        <div className="max-w-7xl mx-auto px-8">
+      <section className="py-20 sm:py-24 md:py-32 bg-surface-container-lowest">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <div className="text-center mb-20">
             <h2 className="font-headline font-bold text-4xl text-on-surface mb-4">Foundation of Balance</h2>
             <div className="w-20 h-1 bg-primary mx-auto rounded-full"></div>
@@ -106,8 +106,8 @@ export default function AboutUs() {
       </section>
 
       {/* Section 4: Meet Our Visionaries */}
-      <section className="py-32 bg-surface-container-lowest">
-        <div className="max-w-7xl mx-auto px-8">
+      <section className="py-20 sm:py-24 md:py-32 bg-surface-container-lowest">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
           <div className="mb-20">
             <h2 className="font-headline font-bold text-4xl text-on-surface mb-4">Clinical Leadership</h2>
             <p className="text-on-surface-variant text-lg">
@@ -128,9 +128,9 @@ export default function AboutUs() {
                 <span className="font-headline font-bold text-primary tracking-widest text-xs uppercase mb-4 block">
                   Founder
                 </span>
-                <h3 className="font-headline font-bold text-4xl text-on-surface mb-2">Dr. RA. Ragothaman</h3>
+                <h3 className="font-headline font-bold text-3xl sm:text-4xl text-on-surface mb-2">Dr. RA. Ragothaman</h3>
                 <p className="text-primary font-bold mb-6">BNYS, MD</p>
-                <p className="text-2xl font-light text-on-surface-variant leading-relaxed mb-8">
+                <p className="text-xl sm:text-2xl font-light text-on-surface-variant leading-relaxed mb-8">
                   &quot;The Architect of Clinical Yoga&quot;
                 </p>
                 <div className="space-y-6 text-on-surface-variant leading-relaxed text-lg">
@@ -159,9 +159,9 @@ export default function AboutUs() {
                 <span className="font-headline font-bold text-primary tracking-widest text-xs uppercase mb-4 block">
                   Co-Founder
                 </span>
-                <h3 className="font-headline font-bold text-4xl text-on-surface mb-2">Dr. R. Aarthi</h3>
+                <h3 className="font-headline font-bold text-3xl sm:text-4xl text-on-surface mb-2">Dr. R. Aarthi</h3>
                 <p className="text-primary font-bold mb-6">BNYS, MD</p>
-                <p className="text-2xl font-light text-on-surface-variant leading-relaxed mb-8">
+                <p className="text-xl sm:text-2xl font-light text-on-surface-variant leading-relaxed mb-8">
                   &quot;The Specialist of Restorative Naturopathy&quot;
                 </p>
                 <div className="space-y-6 text-on-surface-variant leading-relaxed text-lg">
@@ -181,8 +181,8 @@ export default function AboutUs() {
       </section>
 
       {/* Section 5: The Lineage of Light */}
-      <section className="py-32 bg-surface-container-low overflow-hidden">
-        <div className="max-w-7xl mx-auto px-8 relative">
+      <section className="py-20 sm:py-24 md:py-32 bg-surface-container-low overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative">
           <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl -mr-48 -mt-24"></div>
 
           <div className="text-center mb-24 relative z-10">
@@ -239,8 +239,8 @@ export default function AboutUs() {
       </section>
 
       {/* Final CTA */}
-      <section className="py-40 bg-surface-container-lowest text-center">
-        <div className="max-w-3xl mx-auto px-8">
+      <section className="py-24 sm:py-32 md:py-40 bg-surface-container-lowest text-center">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 md:px-8">
           <h2 className="font-headline font-bold text-3xl md:text-4xl text-on-surface mb-8">Begin Your Restoration</h2>
           <p className="text-on-surface-variant text-lg mb-12">
             Connect with our visionaries to discover your personalized path to inner happiness.

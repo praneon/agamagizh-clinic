@@ -89,7 +89,7 @@ export const Logo: React.FC<LogoProps> = ({
     // Only run animations if state has changed
     const activeIdChanged = prevState.current.activeElementId !== activeElementId;
     const sectionStateChanged = prevState.current.sectionState !== sectionState;
-    
+
     if (!activeIdChanged && !sectionStateChanged && !isInitialRender.current) return;
 
     const pathIds = ['path12', 'path13', 'path14', 'path10', 'path11'];
@@ -105,17 +105,21 @@ export const Logo: React.FC<LogoProps> = ({
     pathIds.forEach((id) => {
       const isActive = activeElementId === idToElementMap[id];
       const isAnyActive = activeElementId !== null;
-      
-      animate(`#${id}`, {
-        opacity: isAnyActive ? (isActive ? 1 : 0.4) : 1,
-        filter: isActive 
-          ? 'brightness(1.3) drop-shadow(0 0 30px rgba(255,255,255,0.9)) drop-shadow(0 0 10px rgba(255,255,255,1))' 
-          : 'brightness(1) drop-shadow(0 0 0px rgba(255,255,255,0))',
-        scale: isActive ? 1.12 : 1,
-      }, { 
-        duration: 0.4,
-        ease: "easeOut" 
-      });
+
+      animate(
+        `#${id}`,
+        {
+          opacity: isAnyActive ? (isActive ? 1 : 0.4) : 1,
+          filter: isActive
+            ? 'brightness(1.3) drop-shadow(0 0 30px rgba(255,255,255,0.9)) drop-shadow(0 0 10px rgba(255,255,255,1))'
+            : 'brightness(1) drop-shadow(0 0 0px rgba(255,255,255,0))',
+          scale: isActive ? 1.12 : 1,
+        },
+        {
+          duration: 0.4,
+          ease: 'easeOut',
+        }
+      );
     });
 
     prevState.current = { activeElementId, sectionState };
@@ -126,7 +130,7 @@ export const Logo: React.FC<LogoProps> = ({
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
       className="logo-container w-full max-w-[600px] aspect-square mx-auto flex items-center justify-center p-4"
       ref={scope}
       dangerouslySetInnerHTML={svgContent ? { __html: svgContent } : undefined}

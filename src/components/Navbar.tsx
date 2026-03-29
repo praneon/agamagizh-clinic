@@ -30,22 +30,24 @@ export default function Navbar() {
           : 'bg-slate-50/60 dark:bg-slate-900/60 border-white/20 dark:border-slate-800/20'
       }`}
     >
-      <div className="flex justify-between items-center px-6 lg:px-8 py-4 max-w-7xl mx-auto relative">
-        <div className="flex-1 lg:flex-none flex justify-center lg:justify-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="grid grid-cols-[48px_1fr_48px] items-center lg:flex lg:justify-between lg:items-center">
+        <div className="h-12 w-12 lg:hidden" />
+        <div className="flex justify-center lg:flex-none lg:justify-start">
           <Link
             to="/"
-            className={`text-2xl font-bold tracking-tighter font-headline flex items-center gap-2 shrink-0 ${
+            className={`text-2xl font-bold tracking-tighter font-headline inline-flex items-center gap-1.5 shrink-0 ${
               isElementPage ? 'text-slate-100' : 'text-slate-800 dark:text-slate-100'
             }`}
           >
             <span className="logo-glow">
               <img
                 alt="Agamagizh Logo"
-                className="w-auto object-contain h-14"
-                src="https://lh3.googleusercontent.com/aida/ADBb0ui5G630mJtDya06MNYOgovPWloFZqrTOCpXDcNnqFkdGqYDnmDvpluCnmCaVwSnlDcZqpFXFCrLtHg2R6K3rSXGu6O2Ib2V1oV7piPcLq5qdFzD6Gj20pI2-k5O1rCSt2Bpt9cmgC1XC6wHlWLvcO-1C-aDEd375yvyMmEcgy-awThijo7bpQe_KvdG-iUoquNboFUn8curOkAi-lcIKHfDPrByp0N1J1CLO8eAJfoz5LNpIeDkeHPC8m_A1dTc4IEgULXq3H6w1g"
+                className="h-9 w-9 sm:h-10 sm:w-10 object-contain shrink-0"
+                src="/Logo.svg"
               />
             </span>
-            <span className={`font-bold text-2xl tracking-wider uppercase ${isElementPage ? 'text-slate-100' : 'text-slate-800 dark:text-slate-100'}`}>AGAMAGIZH</span>
+            <span className={`font-bold text-[1.45rem] leading-none tracking-[0.04em] uppercase sm:text-[1.7rem] lg:text-2xl ${isElementPage ? 'text-slate-100' : 'text-slate-800 dark:text-slate-100'}`}>AGAMAGIZH</span>
           </Link>
         </div>
 
@@ -72,7 +74,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile/Tablet Menu Button */}
-        <div className="lg:hidden absolute right-6">
+        <div className="flex justify-end lg:hidden">
           <button 
             className={`p-2 flex items-center justify-center ${isElementPage ? 'text-slate-100' : 'text-slate-800 dark:text-slate-100'}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -80,6 +82,7 @@ export default function Navbar() {
           >
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
+        </div>
         </div>
       </div>
 
