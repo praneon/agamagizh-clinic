@@ -33,80 +33,7 @@ const Resources = () => {
         </div>
       </section>
 
-      {/* SECTION 1: FEATURED ACTIONS */}
-      <section className="px-8 pb-8 max-w-screen-2xl mx-auto space-y-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-3xl"
-        >
-          <span className="text-primary font-headline font-bold tracking-[0.28em] text-xs uppercase">Featured</span>
-          <h2 className="mt-4 text-4xl md:text-5xl font-headline font-bold text-on-surface leading-tight">
-            Explore What We Offer
-          </h2>
-          <p className="mt-4 text-lg text-on-surface-variant max-w-2xl">
-            Quick access to our current treatment offers and curated wellness products, placed up front for easy discovery.
-          </p>
-        </motion.div>
-
-        <div className="flex flex-col gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="group relative overflow-hidden rounded-xl bg-surface-container-low flex flex-col md:flex-row-reverse items-stretch transition-all duration-500 hover:shadow-2xl hover:shadow-outline/5"
-          >
-            <div className="w-full md:w-1/2 p-12 flex flex-col justify-center space-y-6">
-              <span className="text-outline font-headline font-bold tracking-[0.2em] text-xs uppercase">Clinic Offers</span>
-              <h2 className="text-4xl font-headline font-bold text-on-surface leading-tight">Special Treatment Offer</h2>
-              <p className="text-on-surface-variant leading-relaxed max-w-md">Discover our limited-time naturopathy treatment packages designed to support faster healing and complete body balance.</p>
-              <button className="flex items-center gap-2 text-primary font-headline font-bold text-sm tracking-widest hover:gap-4 transition-all w-fit">
-                VIEW OFFERS <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </button>
-            </div>
-            <div className="w-full md:w-1/2 min-h-[400px] relative">
-              <img
-                alt="Special naturopathy treatment setting"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1000&auto=format&fit=crop"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-slate-400/10 mix-blend-overlay"></div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="group relative overflow-hidden rounded-xl bg-surface-container-low flex flex-col md:flex-row items-stretch transition-all duration-500 hover:shadow-2xl hover:shadow-secondary/5"
-          >
-            <div className="w-full md:w-1/2 p-12 flex flex-col justify-center space-y-6">
-              <span className="text-secondary font-headline font-bold tracking-[0.2em] text-xs uppercase">Wellness Products</span>
-              <h2 className="text-4xl font-headline font-bold text-on-surface leading-tight">Natural Wellness Shop</h2>
-              <p className="text-on-surface-variant leading-relaxed max-w-md">Explore herbal remedies, detox kits, and natural wellness products curated to support your healing journey.</p>
-              <button className="flex items-center gap-2 text-primary font-headline font-bold text-sm tracking-widest hover:gap-4 transition-all w-fit">
-                VISIT SHOP <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </button>
-            </div>
-            <div className="w-full md:w-1/2 min-h-[400px] relative">
-              <img
-                alt="Natural wellness products and herbal items"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-secondary/10 mix-blend-overlay"></div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* SECTION 2: FEATURED KNOWLEDGE */}
+      {/* SECTION 1: FEATURED KNOWLEDGE */}
       <section className="py-16 px-8 max-w-screen-2xl mx-auto space-y-12">
         <div className="flex flex-col gap-8">
           {/* Card 1: Purple/Space */}
@@ -121,18 +48,9 @@ const Resources = () => {
               <span className="text-primary font-headline font-bold tracking-[0.2em] text-xs uppercase">panchamahabhuta</span>
               <h2 className="text-4xl font-headline font-bold text-on-surface leading-tight">Understanding the 5 Elements</h2>
               <p className="text-on-surface-variant leading-relaxed max-w-md">Discover how the fundamental building blocks of nature—Earth, Water, Fire, Air, and Space—interact within your body to maintain perfect harmony.</p>
-              <div className="space-y-4">
-                <Link to="/elements/space" className="flex items-center gap-2 text-primary font-headline font-bold text-sm tracking-widest hover:gap-4 transition-all w-fit">
-                  READ MORE <span className="material-symbols-outlined text-sm">arrow_forward</span>
-                </Link>
-                <div className="flex flex-wrap gap-2">
-                  <Link to="/elements/space" className="px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-primary/10 text-primary hover:bg-primary/15 transition-colors">Space</Link>
-                  <Link to="/elements/air" className="px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-slate-200 text-slate-700 hover:bg-slate-300 transition-colors">Air</Link>
-                  <Link to="/elements/fire" className="px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-orange-100 text-orange-700 hover:bg-orange-200 transition-colors">Fire</Link>
-                  <Link to="/elements/water" className="px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors">Water</Link>
-                  <Link to="/elements/earth" className="px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-green-100 text-green-700 hover:bg-green-200 transition-colors">Earth</Link>
-                </div>
-              </div>
+              <Link to="/elements/space" className="flex items-center gap-2 text-primary font-headline font-bold text-sm tracking-widest hover:gap-4 transition-all w-fit">
+                READ MORE <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </Link>
             </div>
             <div className="w-full md:w-1/2 min-h-[400px] relative">
               <img 
@@ -157,9 +75,9 @@ const Resources = () => {
               <span className="text-error font-headline font-bold tracking-[0.2em] text-xs uppercase">Vitality</span>
               <h2 className="text-4xl font-headline font-bold text-on-surface leading-tight">The Legacy Of <br/><span className="text-5xl">Natural Healing</span></h2>
               <p className="text-on-surface-variant leading-relaxed max-w-md">The Vis Medicatrix Naturae—the healing power of nature. Learn how your body possesses an intelligent and complex self-healing mechanism that responds to natural stimuli.</p>
-              <button className="flex items-center gap-2 text-primary font-headline font-bold text-sm tracking-widest hover:gap-4 transition-all w-fit">
+              <Link to="/history" className="flex items-center gap-2 text-primary font-headline font-bold text-sm tracking-widest hover:gap-4 transition-all w-fit">
                 READ MORE <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </button>
+              </Link>
             </div>
             <div className="w-full md:w-1/2 min-h-[400px] relative">
               <img 
@@ -214,7 +132,80 @@ const Resources = () => {
         </div>
       </section>
 
-      {/* SECTION 3: BLOG / ARTICLES */}
+      {/* SECTION 3: FEATURED ACTIONS */}
+      <section className="px-8 py-24 max-w-screen-2xl mx-auto space-y-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="max-w-3xl"
+        >
+          <span className="text-primary font-headline font-bold tracking-[0.28em] text-xs uppercase">Featured</span>
+          <h2 className="mt-4 text-4xl md:text-5xl font-headline font-bold text-on-surface leading-tight">
+            Explore What We Offer
+          </h2>
+          <p className="mt-4 text-lg text-on-surface-variant max-w-2xl">
+            Quick access to our current treatment offers and curated wellness products, placed here after the therapy concepts for a more natural reading flow.
+          </p>
+        </motion.div>
+
+        <div className="flex flex-col gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="group relative overflow-hidden rounded-xl bg-surface-container-low flex flex-col md:flex-row-reverse items-stretch transition-all duration-500 hover:shadow-2xl hover:shadow-outline/5"
+          >
+            <div className="w-full md:w-1/2 p-12 flex flex-col justify-center space-y-6">
+              <span className="text-outline font-headline font-bold tracking-[0.2em] text-xs uppercase">Clinic Offers</span>
+              <h2 className="text-4xl font-headline font-bold text-on-surface leading-tight">Special Treatment Offer</h2>
+              <p className="text-on-surface-variant leading-relaxed max-w-md">Discover our limited-time naturopathy treatment packages designed to support faster healing and complete body balance.</p>
+              <Link to="/offers" className="flex items-center gap-2 text-primary font-headline font-bold text-sm tracking-widest hover:gap-4 transition-all w-fit">
+                VIEW OFFERS <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </Link>
+            </div>
+            <div className="w-full md:w-1/2 min-h-[400px] relative">
+              <img
+                alt="Special naturopathy treatment setting"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=1000&auto=format&fit=crop"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-slate-400/10 mix-blend-overlay"></div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="group relative overflow-hidden rounded-xl bg-surface-container-low flex flex-col md:flex-row items-stretch transition-all duration-500 hover:shadow-2xl hover:shadow-secondary/5"
+          >
+            <div className="w-full md:w-1/2 p-12 flex flex-col justify-center space-y-6">
+              <span className="text-secondary font-headline font-bold tracking-[0.2em] text-xs uppercase">Wellness Products</span>
+              <h2 className="text-4xl font-headline font-bold text-on-surface leading-tight">Natural Wellness Shop</h2>
+              <p className="text-on-surface-variant leading-relaxed max-w-md">Explore herbal remedies, detox kits, and natural wellness products curated to support your healing journey.</p>
+              <Link to="/shop" className="flex items-center gap-2 text-primary font-headline font-bold text-sm tracking-widest hover:gap-4 transition-all w-fit">
+                VISIT SHOP <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              </Link>
+            </div>
+            <div className="w-full md:w-1/2 min-h-[400px] relative">
+              <img
+                alt="Natural wellness products and herbal items"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-secondary/10 mix-blend-overlay"></div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* SECTION 4: BLOG / ARTICLES */}
       <section className="py-24 px-8 max-w-screen-2xl mx-auto space-y-16">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
