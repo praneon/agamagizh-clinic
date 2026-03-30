@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import FloatingContactRail from './FloatingContactRail';
 
 export default function Layout() {
   const { pathname } = useLocation();
@@ -16,6 +17,7 @@ export default function Layout() {
       <main className="flex-grow">
         <Outlet />
       </main>
+      <FloatingContactRail />
       <Footer />
     </div>
   );

@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { siteConfig } from '../siteConfig';
 
 export default function Footer() {
+  const { contact } = siteConfig;
+
   return (
     <footer className="w-full py-16 px-8 border-t border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-12 max-w-7xl mx-auto text-center md:text-left">
@@ -37,13 +40,13 @@ export default function Footer() {
         <div className="flex flex-col items-center md:items-start">
           <h4 className="font-headline font-bold text-slate-800 dark:text-slate-200 mb-6 text-sm uppercase tracking-widest">Location</h4>
           <p className="font-body text-sm text-slate-600 dark:text-slate-400 mb-4">
-            No 243 2, Near MRN Nagar, Durugam Road,<br/>
-            Puthumariyamman Kovil Street, Raja Nagar,<br/>
-            Kallakurichi - 606202, Tamil Nadu.
+            {contact.addressLines[0]}<br/>
+            {contact.addressLines[1]}<br/>
+            {contact.addressLines[2]}
           </p>
           <div className="flex space-x-4 justify-center md:justify-start">
             <a className="text-[#5948d3] hover:opacity-80 transition-opacity" href="#"><span className="material-symbols-outlined">public</span></a>
-            <a className="text-[#5948d3] hover:opacity-80 transition-opacity" href="#"><span className="material-symbols-outlined">mail</span></a>
+            <a className="text-[#5948d3] hover:opacity-80 transition-opacity" href={`mailto:${contact.email}`}><span className="material-symbols-outlined">mail</span></a>
           </div>
         </div>
       </div>

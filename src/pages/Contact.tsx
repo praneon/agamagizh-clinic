@@ -1,7 +1,10 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { siteConfig } from '../siteConfig';
 
 const Contact = () => {
+  const { contact } = siteConfig;
+
   return (
     <main className="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
       {/* Header Section */}
@@ -50,7 +53,7 @@ const Contact = () => {
               </div>
               <div>
                 <p className="text-[0.65rem] uppercase font-bold tracking-widest text-outline">Phone Support</p>
-                <p className="text-xl font-headline font-bold text-on-surface">+91 98765 43210</p>
+                <p className="text-xl font-headline font-bold text-on-surface">{contact.phoneDisplay}</p>
               </div>
             </div>
             <div className="flex items-center gap-4 mb-8">
@@ -59,10 +62,10 @@ const Contact = () => {
               </div>
               <div>
                 <p className="text-[0.65rem] uppercase font-bold tracking-widest text-outline">Clinical Email</p>
-                <p className="text-xl font-headline font-bold text-on-surface">care@agamagizh.com</p>
+                <p className="text-xl font-headline font-bold text-on-surface">{contact.email}</p>
               </div>
             </div>
-            <a className="block w-full py-4 bg-tertiary text-on-tertiary rounded-full text-center font-bold tracking-wide hover:opacity-90 transition-all flex items-center justify-center gap-2" href="https://wa.me/919876543210">
+            <a className="block w-full py-4 bg-tertiary text-on-tertiary rounded-full text-center font-bold tracking-wide hover:opacity-90 transition-all flex items-center justify-center gap-2" href={contact.whatsappUrl}>
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
               Chat on WhatsApp
             </a>
@@ -111,8 +114,8 @@ const Contact = () => {
               </div>
               <h3 className="font-headline text-2xl font-bold mb-3 text-on-surface">Main Clinic</h3>
               <p className="text-on-surface-variant leading-relaxed mb-6">
-                Raja Nagar, Kallakurichi.<br/>
-                Tamil Nadu, 606202
+                {contact.clinicAddressLines[0]}<br/>
+                {contact.clinicAddressLines[1]}
               </p>
               <div className="mt-auto">
                 <button className="flex items-center gap-2 text-primary font-bold text-sm hover:underline underline-offset-4">
@@ -145,8 +148,8 @@ const Contact = () => {
               </div>
               <h3 className="font-headline text-2xl font-bold mb-3 text-on-surface">Yoga Studio</h3>
               <p className="text-on-surface-variant leading-relaxed mb-6">
-                Gandhi Road, Kallakurichi.<br/>
-                Tamil Nadu, 606202
+                {contact.yogaStudioAddressLines[0]}<br/>
+                {contact.yogaStudioAddressLines[1]}
               </p>
               <div className="mt-auto">
                 <button className="flex items-center gap-2 text-secondary font-bold text-sm hover:underline underline-offset-4">
