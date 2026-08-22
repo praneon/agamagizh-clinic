@@ -13,7 +13,7 @@ export default function Footer() {
               <img
                 alt="Agamagizh Logo"
                 className="w-auto object-contain mb-4 h-[128px]"
-                src="https://lh3.googleusercontent.com/aida/ADBb0ui5G630mJtDya06MNYOgovPWloFZqrTOCpXDcNnqFkdGqYDnmDvpluCnmCaVwSnlDcZqpFXFCrLtHg2R6K3rSXGu6O2Ib2V1oV7piPcLq5qdFzD6Gj20pI2-k5O1rCSt2Bpt9cmgC1XC6wHlWLvcO-1C-aDEd375yvyMmEcgy-awThijo7bpQe_KvdG-iUoquNboFUn8curOkAi-lcIKHfDPrByp0N1J1CLO8eAJfoz5LNpIeDkeHPC8m_A1dTc4IEgULXq3H6w1g"
+                src="/Logo.svg"
               />
             </span>
           </div>

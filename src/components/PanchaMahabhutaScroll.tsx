@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValueEvent } from 'motion/react';
 import { Logo } from './Logo';
+import { ElementAmbiance } from './ElementAmbiance';
 import { ELEMENTS } from '../constants';
 
 export type SectionState = 'entering' | 'active' | 'exiting' | 'none';
@@ -55,6 +56,7 @@ export const PanchaMahabhutaScroll: React.FC = () => {
     >
       {/* Sticky Logo Container */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden pointer-events-none">
+        <ElementAmbiance activeElementId={activeElementId} />
         <div className="relative w-full max-w-6xl h-full px-4 sm:px-8 flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24 pointer-events-auto">
           {/* Logo Section - Centered on mobile, Left on desktop */}
           <div className="w-full lg:w-1/2 flex justify-center items-center flex-none">
@@ -69,14 +71,14 @@ export const PanchaMahabhutaScroll: React.FC = () => {
 
           {/* Info Section (Floating) */}
           <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-start flex-none">
-            <div className="relative w-full max-w-md min-h-[320px] sm:min-h-[340px]">
+            <div className="relative w-full max-w-md h-[340px] sm:h-[360px]">
               <motion.div
                 key={activeElementId || 'intro'}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="bg-white/90 backdrop-blur-xl p-8 lg:p-10 rounded-[2.5rem] shadow-2xl border border-white/40"
+                className="absolute inset-0 overflow-y-auto bg-white/90 backdrop-blur-xl p-8 lg:p-10 rounded-[2.5rem] shadow-2xl border border-white/40"
               >
                 {!activeElementId ? (
                   <div className="space-y-4">

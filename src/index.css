@@ -102,3 +102,50 @@
 .logo-glow img {
     filter: drop-shadow(0 10px 22px rgba(89, 72, 211, 0.16));
 }
+
+/* Pancha Mahabhuta scroll ambiance */
+@keyframes ambiance-twinkle {
+    0%, 100% { opacity: 0.2; transform: scale(0.7); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+@keyframes ambiance-glow-breathe {
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.08); }
+}
+@keyframes ambiance-nebula-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes ambiance-gust-sweep {
+    0% { transform: translateX(-60%) skewX(-14deg); opacity: 0; }
+    10% { opacity: 1; }
+    75% { opacity: 1; }
+    100% { transform: translateX(180%) skewX(-14deg); opacity: 0; }
+}
+@keyframes ambiance-wisp-drift {
+    0% { transform: translateX(-15%); opacity: 0; }
+    12% { opacity: 0.5; }
+    88% { opacity: 0.5; }
+    100% { transform: translateX(115%); opacity: 0; }
+}
+@keyframes ambiance-rise {
+    0% { transform: translateY(0) scale(0.6); opacity: 0; }
+    18% { opacity: 0.95; }
+    100% { transform: translateY(-46vh) scale(1); opacity: 0; }
+}
+@keyframes ambiance-heat-pulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 0.65; transform: scaleY(1.1); }
+}
+@keyframes ambiance-wave-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+@keyframes ambiance-caustic {
+    0%, 100% { opacity: 0.25; transform: scale(1) translateY(0); }
+    50% { opacity: 0.55; transform: scale(1.15) translateY(6px); }
+}
+@keyframes ambiance-float {
+    0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+    50% { transform: translateY(-16px) translateX(8px) rotate(6deg); }
+}
