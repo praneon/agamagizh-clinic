@@ -1,12 +1,31 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'motion/react';
+import { motion, useScroll, useTransform, useMotionValueEvent, useMotionValue, MotionValue } from 'motion/react';
 import { Logo } from './Logo';
 import { ElementAmbiance } from './ElementAmbiance';
 import { ELEMENTS } from '../constants';
 
 export type SectionState = 'entering' | 'active' | 'exiting' | 'none';
 
-export const PanchaMahabhutaScroll: React.FC = () => {
+interface PanchaMahabhutaScrollProps {
+  // Where the MorphingLogo reads its destination rect from — the logo
+  // travels down from the hero and comes to rest here.
+  dockLogoSlotRef?: React.RefObject<HTMLDivElement>;
+  // A never-sticky element marking this section's top, used to compute the
+  // scroll range the logo travels across. Must NOT be the sticky logo slot
+  // itself — once that's pinned, its rect stops reflecting true scroll
+  // position, corrupting the range on any resize mid-scroll.
+  dockAnchorRef?: React.RefObject<HTMLDivElement>;
+  // 0 at rest in the hero, 1 once docked — this section's own logo only
+  // fades in over the last stretch, exactly as the travelling copy fades
+  // out, so the two never appear onscreen together.
+  logoRevealProgress?: MotionValue<number>;
+}
+
+export const PanchaMahabhutaScroll: React.FC<PanchaMahabhutaScrollProps> = ({
+  dockLogoSlotRef,
+  dockAnchorRef,
+  logoRevealProgress,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeElementId, setActiveElementId] = useState<string | null>(null);
   const [sectionState, setSectionState] = useState<SectionState>('none');
@@ -48,9 +67,24 @@ export const PanchaMahabhutaScroll: React.FC = () => {
     setActiveElementId(id);
   }, []);
 
+  // Fully visible whenever no external progress is supplied; otherwise
+  // fades in over the same window the travelling logo fades out over.
+  const alwaysVisible = useMotionValue(1);
+  // Must match MorphingLogo's OPACITY_FADE_START exactly, or the two fades
+  // won't line up and either overlap (double image) or gap (nothing shown).
+  const logoOpacity = useTransform(logoRevealProgress ?? alwaysVisible, [0.985, 1], [0, 1]);
+
+  const setContainerRef = React.useCallback(
+    (node: HTMLDivElement | null) => {
+      containerRef.current = node;
+      if (dockAnchorRef) dockAnchorRef.current = node;
+    },
+    [dockAnchorRef]
+  );
+
   return (
-    <motion.div 
-      ref={containerRef} 
+    <motion.div
+      ref={setContainerRef}
       className="relative h-[900vh] shadow-inner"
       style={{ backgroundColor }}
     >
@@ -60,13 +94,17 @@ export const PanchaMahabhutaScroll: React.FC = () => {
         <div className="relative w-full max-w-6xl h-full px-4 sm:px-8 flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24 pointer-events-auto">
           {/* Logo Section - Centered on mobile, Left on desktop */}
           <div className="w-full lg:w-1/2 flex justify-center items-center flex-none">
-            <div className="w-[240px] sm:w-[240px] md:w-[280px] lg:w-full lg:max-w-[420px] origin-center scale-100">
-              <Logo 
-                onElementClick={handleElementClick} 
-                activeElementId={activeElementId} 
+            <motion.div
+              ref={dockLogoSlotRef}
+              className="w-[240px] sm:w-[240px] md:w-[280px] lg:w-full lg:max-w-[420px]"
+              style={{ opacity: logoOpacity }}
+            >
+              <Logo
+                onElementClick={handleElementClick}
+                activeElementId={activeElementId}
                 sectionState={sectionState}
               />
-            </div>
+            </motion.div>
           </div>
 
           {/* Info Section (Floating) */}

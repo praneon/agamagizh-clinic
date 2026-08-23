@@ -1,39 +1,48 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { PanchaMahabhutaScroll } from '../components/PanchaMahabhutaScroll';
+import { MorphingLogo } from '../components/MorphingLogo';
+import { useLogoMorphProgress } from '../hooks/useLogoMorphProgress';
 
 export default function Home() {
+  const heroLogoSlotRef = useRef<HTMLDivElement>(null);
+  const dockLogoSlotRef = useRef<HTMLDivElement>(null);
+  const dockAnchorRef = useRef<HTMLDivElement>(null);
+  const logoMorphProgress = useLogoMorphProgress(heroLogoSlotRef, dockAnchorRef);
+
   return (
     <>
+      <MorphingLogo heroSlotRef={heroLogoSlotRef} dockSlotRef={dockLogoSlotRef} progress={logoMorphProgress} />
+
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-start sm:justify-center pt-28 sm:pt-24 overflow-hidden">
         {/* Subtle Abstract Background Shapes */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary element-blob rounded-full"></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary element-blob rounded-full"></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-tertiary element-blob rounded-full opacity-5"></div>
-        
+
         <div className="z-10 w-full text-center px-4 sm:px-6 mt-4 sm:mt-0">
-          <div className="relative mb-4 flex w-full justify-center">
-            <div className="relative group flex justify-center">
-            <img 
-              alt="Agamagizh Logo" 
-              className="block mx-auto object-contain transition-transform duration-700 group-hover:scale-110 h-56 w-56 sm:h-64 sm:w-64 md:h-[260px] md:w-[260px] lg:h-[320px] lg:w-[320px]" 
-              src="/Logo.svg"
-            />
-            <div className="absolute -inset-4 bg-surface-container-low rounded-full -z-10 opacity-50 blur-xl"></div>
-            </div>
-          </div>
-          
+          {/* Text sits above the logo so the travelling logo's path down to
+              the Pancha Mahabhuta section never has to cross over it. */}
           <h1 className="font-headline text-4xl sm:text-5xl md:text-7xl font-bold text-on-surface tracking-tighter mb-6">
             Agamagizh: Restoring <br/>
             <span className="text-primary italic">Inner Happiness</span>
           </h1>
-          
+
           <p className="font-body text-lg sm:text-xl text-on-surface-variant max-w-2xl mx-auto leading-relaxed mb-10 sm:mb-12">
             A sanctuary where the precision of naturopathic science meets the ethereal serenity of yoga. We heal by harmonizing the five fundamental elements within you.
           </p>
-          
+
+          <div className="relative mb-10 flex w-full justify-center">
+            <div className="relative flex justify-center h-56 w-56 sm:h-64 sm:w-64 md:h-[260px] md:w-[260px] lg:h-[320px] lg:w-[320px]">
+              {/* Invisible — reserves the slot the MorphingLogo reads its start position from. */}
+              <div ref={heroLogoSlotRef} className="absolute inset-0" />
+              <div className="absolute -inset-4 bg-surface-container-low rounded-full -z-10 opacity-50 blur-xl"></div>
+            </div>
+          </div>
+
           {/* Interaction Visual Description */}
-          <div className="mt-16 flex flex-col items-center animate-bounce opacity-40">
+          <div className="flex flex-col items-center animate-bounce opacity-40">
             <span className="material-symbols-outlined text-4xl">expand_more</span>
             <p className="text-[10px] uppercase tracking-[0.2em] font-bold mt-2">Scroll to align your elements</p>
           </div>
@@ -41,7 +50,11 @@ export default function Home() {
       </section>
 
       {/* Interactive Scroll Section */}
-      <PanchaMahabhutaScroll />
+      <PanchaMahabhutaScroll
+        dockLogoSlotRef={dockLogoSlotRef}
+        dockAnchorRef={dockAnchorRef}
+        logoRevealProgress={logoMorphProgress}
+      />
 
       {/* Trust Bar / Testimonials */}
       <section className="py-24 bg-white">
