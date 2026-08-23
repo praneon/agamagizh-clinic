@@ -20,5 +20,20 @@ export default defineConfig(({mode}) => {
       // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
     },
+    build: {
+      rollupOptions: {
+        output: {
+          // Split large, rarely-changing vendor libraries into their own
+          // chunks instead of one ~590kB bundle, so browsers can cache
+          // them independently of app code and avoid the Rollup
+          // chunk-size warning.
+          manualChunks: {
+            react: ['react', 'react-dom', 'react-router-dom'],
+            motion: ['motion'],
+            icons: ['lucide-react'],
+          },
+        },
+      },
+    },
   };
 });
