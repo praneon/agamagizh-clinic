@@ -137,6 +137,13 @@
     88% { opacity: 0.5; }
     100% { transform: translateX(115%); opacity: 0; }
 }
+/* Translate-only variant for Wisp: its gradient stroke already tapers to
+   nothing at both ends, so opacity is left to the per-instance inline
+   style instead of being baked into the keyframe. */
+@keyframes ambiance-wisp-translate {
+    0% { transform: translateX(-15%); }
+    100% { transform: translateX(115%); }
+}
 @keyframes ambiance-rise {
     0% { transform: translateY(0) scale(0.6); opacity: 0; }
     18% { opacity: 0.95; }

@@ -63,6 +63,55 @@ const Strip: React.FC<{
   </div>
 );
 
+// A single wisp of moving air: a gently wavering line rather than a rigid
+// straight bar, tapering to nothing at both ends via a gradient stroke so
+// it reads as a soft current instead of a hard-edged rectangle.
+const Wisp: React.FC<{ id: number; top: string; width: number; amplitude: number; opacity: number; duration: number; delay: number }> = ({
+  id,
+  top,
+  width,
+  amplitude,
+  opacity,
+  duration,
+  delay,
+}) => {
+  const h = amplitude * 2 + 4;
+  const mid = h / 2;
+  const gradientId = `wisp-fade-${id}`;
+  return (
+    <svg
+      className="absolute"
+      style={{
+        top,
+        left: '-20%',
+        width,
+        height: h,
+        opacity,
+        filter: 'blur(0.5px)',
+        animation: `ambiance-wisp-translate ${duration}s ease-in-out ${delay}s infinite`,
+      }}
+      viewBox={`0 0 200 ${h}`}
+      preserveAspectRatio="none"
+    >
+      <defs>
+        <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="white" stopOpacity="0" />
+          <stop offset="18%" stopColor="white" stopOpacity="0.9" />
+          <stop offset="82%" stopColor="white" stopOpacity="0.9" />
+          <stop offset="100%" stopColor="white" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path
+        d={`M0,${mid} C25,${mid - amplitude} 45,${mid + amplitude} 70,${mid} C95,${mid - amplitude} 115,${mid + amplitude} 140,${mid} C165,${mid - amplitude} 185,${mid + amplitude} 200,${mid}`}
+        fill="none"
+        stroke={`url(#${gradientId})`}
+        strokeWidth={1.6}
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+};
+
 export const ElementAmbiance: React.FC<ElementAmbianceProps> = ({ activeElementId }) => {
   // ── Space (Akasha): nebula glow, starfield, occasional shooting stars, a
   // faint slow-rotating orbit ring for a sense of cosmic depth.
@@ -103,22 +152,24 @@ export const ElementAmbiance: React.FC<ElementAmbianceProps> = ({ activeElementI
   );
   const currents = useMemo(
     () =>
-      seeded(5, 5, (i, r) => ({
-        top: `${(i * 16 + r * 14 + 30).toFixed(1)}%`,
-        width: 90 + r * 120,
+      seeded(5, 6, (i, r) => ({
+        top: `${(i * 14 + r * 12 + 26).toFixed(1)}%`,
+        width: 90 + r * 130,
+        amplitude: 4 + r * 5,
+        opacity: 0.35 + r * 0.2,
         delay: (r * 6).toFixed(2),
-        duration: (9 + r * 6).toFixed(2),
+        duration: (7 + r * 5).toFixed(2),
       })),
     []
   );
   const leaves = useMemo(
     () =>
-      seeded(12, 6, (i, r) => ({
-        top: `${(i * 15 + r * 10 + 6).toFixed(1)}%`,
-        size: 8 + r * 6,
-        delay: (r * 8).toFixed(2),
-        duration: (7 + r * 4).toFixed(2),
-        hue: 25 + r * 20,
+      seeded(12, 11, (i, r) => ({
+        top: `${(i * 8.5 + r * 7 + 4).toFixed(1)}%`,
+        size: 7 + r * 7,
+        delay: (r * 9).toFixed(2),
+        duration: (6.5 + r * 4.5).toFixed(2),
+        hue: 22 + r * 26,
       })),
     []
   );
@@ -271,16 +322,15 @@ export const ElementAmbiance: React.FC<ElementAmbianceProps> = ({ activeElementI
           />
         ))}
         {currents.map((w, i) => (
-          <span
+          <Wisp
             key={i}
-            className="absolute h-px rounded-full bg-white/60"
-            style={{
-              top: w.top,
-              left: '-20%',
-              width: w.width,
-              filter: 'blur(1px)',
-              animation: `ambiance-wisp-drift ${w.duration}s linear ${w.delay}s infinite`,
-            }}
+            id={i}
+            top={w.top}
+            width={w.width}
+            amplitude={w.amplitude}
+            opacity={w.opacity}
+            duration={Number(w.duration)}
+            delay={Number(w.delay)}
           />
         ))}
         {leaves.map((l, i) => (
