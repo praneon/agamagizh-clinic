@@ -51,7 +51,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-slate-100 dark:border-slate-800 text-center font-body text-xs text-slate-400">
-        © 2024 Agamagizh Naturopathy & Yoga. All rights reserved.
+        © 2023 Agamagizh Naturopathy & Yoga. All rights reserved.
       </div>
     </footer>
   );
