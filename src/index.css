@@ -104,6 +104,15 @@
 }
 
 /* Pancha Mahabhuta scroll ambiance */
+
+/* Freeze every animated descendant of an inactive ambiance layer instead
+   of leaving all five elements' looping keyframe animations running while
+   invisible — that continuous, often blur-heavy repaint work is enough to
+   visibly flicker the navbar's backdrop-blur above it during fast scroll. */
+.ambiance-layer[data-active="false"] * {
+    animation-play-state: paused !important;
+}
+
 @keyframes ambiance-twinkle {
     0%, 100% { opacity: 0.2; transform: scale(0.7); }
     50% { opacity: 1; transform: scale(1.2); }
@@ -148,4 +157,52 @@
 @keyframes ambiance-float {
     0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
     50% { transform: translateY(-16px) translateX(8px) rotate(6deg); }
+}
+@keyframes ambiance-orbit-spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes ambiance-shooting-star {
+    0% { transform: translate(0, 0) rotate(-35deg) scaleX(0); opacity: 0; }
+    4% { opacity: 1; transform: translate(0, 0) rotate(-35deg) scaleX(1); }
+    18% { opacity: 0; }
+    100% { transform: translate(-220px, 220px) rotate(-35deg) scaleX(1); opacity: 0; }
+}
+@keyframes ambiance-ribbon-flow {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+@keyframes ambiance-leaf-tumble {
+    0% { transform: translate(-10%, 0) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.85; }
+    90% { opacity: 0.85; }
+    100% { transform: translate(120%, -18px) rotate(340deg); opacity: 0; }
+}
+@keyframes ambiance-flame-flicker {
+    0%, 100% { transform: scaleY(1) scaleX(1) skewX(0deg); }
+    25% { transform: scaleY(1.07) scaleX(0.96) skewX(-1.5deg); }
+    50% { transform: scaleY(0.95) scaleX(1.04) skewX(1.5deg); }
+    75% { transform: scaleY(1.05) scaleX(0.97) skewX(-1deg); }
+}
+@keyframes ambiance-shimmer-rise {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    15% { opacity: 0.4; }
+    85% { opacity: 0.18; }
+    100% { transform: translateY(-24vh) translateX(6px); opacity: 0; }
+}
+@keyframes ambiance-bubble-rise {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    12% { opacity: 0.8; }
+    85% { opacity: 0.55; }
+    100% { transform: translateY(-38vh) translateX(10px); opacity: 0; }
+}
+@keyframes ambiance-grass-sway {
+    0%, 100% { transform: rotate(-4deg); }
+    50% { transform: rotate(5deg); }
+}
+@keyframes ambiance-leaf-fall {
+    0% { transform: translate(0, -10%) rotate(0deg); opacity: 0; }
+    10% { opacity: 0.9; }
+    90% { opacity: 0.7; }
+    100% { transform: translate(30px, 90vh) rotate(200deg); opacity: 0; }
 }
