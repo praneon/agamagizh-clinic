@@ -25,16 +25,16 @@ export default function Footer() {
           <h4 className="font-headline font-bold text-slate-800 dark:text-slate-200 mb-6 text-sm uppercase tracking-widest">Navigation</h4>
           <div className="flex flex-col space-y-4">
             <Link to="/" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Home</Link>
-            <Link to="#" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">About Us</Link>
-            <Link to="#" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Resources</Link>
-            <Link to="#" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Contact</Link>
+            <Link to="/about" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">About Us</Link>
+            <Link to="/resources" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Resources</Link>
+            <Link to="/contact" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Contact</Link>
           </div>
         </div>
         <div className="flex flex-col items-center md:items-start">
           <h4 className="font-headline font-bold text-slate-800 dark:text-slate-200 mb-6 text-sm uppercase tracking-widest">Legal</h4>
           <div className="flex flex-col space-y-4">
-            <Link to="#" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Privacy Policy</Link>
-            <Link to="#" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Terms of Service</Link>
+            <Link to="/privacy-policy" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Terms of Service</Link>
           </div>
         </div>
         <div className="flex flex-col items-center md:items-start">

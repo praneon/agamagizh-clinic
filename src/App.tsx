@@ -15,6 +15,8 @@ import Fire from './pages/elements/Fire';
 import Water from './pages/elements/Water';
 import Earth from './pages/elements/Earth';
 import Shop from './pages/Shop';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
           <Route path="elements/fire" element={<Fire />} />
           <Route path="elements/water" element={<Water />} />
           <Route path="elements/earth" element={<Earth />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="terms-of-service" element={<TermsOfService />} />
           {/* Add more routes here as needed */}
         </Route>
       </Routes>

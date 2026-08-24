@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
+import { submitAppointment, ApiError } from '../lib/api';
 
 const BookAppointment = () => {
+  const [form, setForm] = useState({ name: '', age: '', phone: '', concern: '' });
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleChange = (field: keyof typeof form) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.phone.trim()) {
+      setStatus('error');
+      setErrorMessage('Please provide your name and contact number.');
+      return;
+    }
+
+    setStatus('submitting');
+    try {
+      await submitAppointment(form);
+      setStatus('success');
+      setForm({ name: '', age: '', phone: '', concern: '' });
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage(err instanceof ApiError ? err.message : 'Something went wrong. Please try again.');
+    }
+  };
+
   return (
     <main className="pt-24 overflow-x-hidden">
       {/* Hero Section */}
@@ -128,29 +156,72 @@ const BookAppointment = () => {
               </div>
             </div>
             
-            <form className="bg-surface-container-lowest rounded-xl p-8 border border-outline-variant/10 shadow-[0_20px_40px_rgba(45,51,53,0.06)] space-y-6">
+            <form onSubmit={handleSubmit} className="bg-surface-container-lowest rounded-xl p-8 border border-outline-variant/10 shadow-[0_20px_40px_rgba(45,51,53,0.06)] space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-outline uppercase tracking-wider">Full Name</label>
-                  <input className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all" placeholder="John Doe" type="text" />
+                  <input
+                    className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all"
+                    placeholder="John Doe"
+                    type="text"
+                    value={form.name}
+                    onChange={handleChange('name')}
+                    required
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-xs font-bold text-outline uppercase tracking-wider">Age</label>
-                  <input className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all" placeholder="25" type="number" />
+                  <input
+                    className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all"
+                    placeholder="25"
+                    type="number"
+                    value={form.age}
+                    onChange={handleChange('age')}
+                  />
                 </div>
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-outline uppercase tracking-wider">Health Condition / Concerns</label>
-                <textarea className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all" placeholder="Describe your primary symptoms or goals..." rows={3}></textarea>
+                <textarea
+                  className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all"
+                  placeholder="Describe your primary symptoms or goals..."
+                  rows={3}
+                  value={form.concern}
+                  onChange={handleChange('concern')}
+                ></textarea>
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-outline uppercase tracking-wider">Contact Number</label>
-                <input className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all" placeholder="+91 00000 00000" type="tel" />
+                <input
+                  className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all"
+                  placeholder="+91 00000 00000"
+                  type="tel"
+                  value={form.phone}
+                  onChange={handleChange('phone')}
+                  required
+                />
               </div>
-              <button className="w-full bg-primary text-on-primary py-5 rounded-full font-headline font-bold uppercase tracking-widest text-sm hover:bg-primary-dim transition-all shadow-lg shadow-primary/25" type="submit">
-                Request Appointment
+              <button
+                className="w-full bg-primary text-on-primary py-5 rounded-full font-headline font-bold uppercase tracking-widest text-sm hover:bg-primary-dim transition-all shadow-lg shadow-primary/25 disabled:opacity-60"
+                type="submit"
+                disabled={status === 'submitting'}
+              >
+                {status === 'submitting' ? 'Sending...' : 'Request Appointment'}
               </button>
+              {status === 'success' && (
+                <p className="text-sm text-center text-primary font-bold">
+                  Request received! We'll confirm your slot on WhatsApp shortly.
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="text-sm text-center text-error font-bold">{errorMessage}</p>
+              )}
               <p className="text-[10px] text-center text-outline-variant uppercase tracking-widest">Our clinical team will confirm within 24 hours</p>
+              <p className="text-[10px] text-center text-outline-variant">
+                By submitting, you agree to our{' '}
+                <a href="/privacy-policy" className="underline">Privacy Policy</a> and consent to receive
+                appointment updates via WhatsApp.
+              </p>
             </form>
           </motion.div>
         </div>

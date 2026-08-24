@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { siteConfig } from '../siteConfig';
+import { submitInquiry, ApiError } from '../lib/api';
 
 const Contact = () => {
   const { contact } = siteConfig;
+  const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' });
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleChange = (field: keyof typeof form) => (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => setForm((prev) => ({ ...prev, [field]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.phone.trim() || !form.message.trim()) {
+      setStatus('error');
+      setErrorMessage('Please fill in your name, phone number, and message.');
+      return;
+    }
+
+    setStatus('submitting');
+    try {
+      await submitInquiry(form);
+      setStatus('success');
+      setForm({ name: '', phone: '', email: '', message: '' });
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage(err instanceof ApiError ? err.message : 'Something went wrong. Please try again.');
+    }
+  };
 
   return (
     <main className="pt-32 pb-24 px-6 md:px-12 max-w-7xl mx-auto">
@@ -161,6 +188,87 @@ const Contact = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Enquiry Form Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5 }}
+        className="mb-24 bg-surface-container-lowest rounded-xl p-8 md:p-12 shadow-[0_20px_40px_rgba(45,51,53,0.06)] max-w-3xl mx-auto"
+      >
+        <h2 className="font-headline text-3xl font-bold text-on-surface mb-2 text-center">Send Us a Message</h2>
+        <p className="text-on-surface-variant text-center mb-8">
+          We'll get back to you on WhatsApp or by phone.
+        </p>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-outline uppercase tracking-wider">Full Name</label>
+              <input
+                className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all"
+                placeholder="Jane Doe"
+                type="text"
+                value={form.name}
+                onChange={handleChange('name')}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-outline uppercase tracking-wider">Phone (WhatsApp)</label>
+              <input
+                className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all"
+                placeholder="+91 00000 00000"
+                type="tel"
+                value={form.phone}
+                onChange={handleChange('phone')}
+                required
+              />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-outline uppercase tracking-wider">Email (optional)</label>
+            <input
+              className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all"
+              placeholder="jane@example.com"
+              type="email"
+              value={form.email}
+              onChange={handleChange('email')}
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-outline uppercase tracking-wider">Message</label>
+            <textarea
+              className="w-full bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary/20 p-4 transition-all"
+              placeholder="How can we help?"
+              rows={4}
+              value={form.message}
+              onChange={handleChange('message')}
+              required
+            ></textarea>
+          </div>
+          <button
+            className="w-full bg-tertiary text-on-tertiary py-4 rounded-full font-headline font-bold uppercase tracking-widest text-sm hover:opacity-90 transition-all disabled:opacity-60"
+            type="submit"
+            disabled={status === 'submitting'}
+          >
+            {status === 'submitting' ? 'Sending...' : 'Send Message'}
+          </button>
+          {status === 'success' && (
+            <p className="text-sm text-center text-primary font-bold">
+              Thanks! We'll reach out on WhatsApp shortly.
+            </p>
+          )}
+          {status === 'error' && (
+            <p className="text-sm text-center text-error font-bold">{errorMessage}</p>
+          )}
+          <p className="text-[10px] text-center text-outline-variant">
+            By submitting, you agree to our{' '}
+            <a href="/privacy-policy" className="underline">Privacy Policy</a> and consent to receive replies
+            via WhatsApp.
+          </p>
+        </form>
+      </motion.section>
 
       {/* Map Section */}
       <motion.section 
