@@ -17,6 +17,7 @@ import Earth from './pages/elements/Earth';
 import Shop from './pages/Shop';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import DataDeletion from './pages/DataDeletion';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="elements/earth" element={<Earth />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="terms-of-service" element={<TermsOfService />} />
+          <Route path="data-deletion" element={<DataDeletion />} />
           {/* Add more routes here as needed */}
         </Route>
       </Routes>

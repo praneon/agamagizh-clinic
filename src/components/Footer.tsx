@@ -35,6 +35,7 @@ export default function Footer() {
           <div className="flex flex-col space-y-4">
             <Link to="/privacy-policy" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Privacy Policy</Link>
             <Link to="/terms-of-service" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Terms of Service</Link>
+            <Link to="/data-deletion" className="text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 font-body text-sm hover:underline decoration-[#5948d3] underline-offset-4 transition-opacity">Data Deletion</Link>
           </div>
         </div>
         <div className="flex flex-col items-center md:items-start">

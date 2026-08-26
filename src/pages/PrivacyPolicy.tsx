@@ -106,7 +106,10 @@ const PrivacyPolicy = () => {
           <p>
             Under the DPDP Act, you have the right to access, correct, and request erasure of your personal
             data, and to withdraw consent for future communications. To exercise any of these rights, contact
-            us using the details below.
+            us using the details below or follow our{' '}
+            <a className="text-primary underline underline-offset-4" href="/data-deletion">
+              Data Deletion Request instructions
+            </a>.
           </p>
         </Section>
 
