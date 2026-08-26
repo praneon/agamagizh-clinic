@@ -53,3 +53,20 @@ export const submitAppointment = (payload: AppointmentPayload) =>
 
 export const submitInquiry = (payload: InquiryPayload) =>
   post<{ id: string }>('/api/inquiries', payload);
+
+/**
+ * Real Chatwoot agent presence, via our own bridge (the widget SDK has no
+ * public API for this). Returns null — not "offline" — when the bridge
+ * isn't configured/reachable, so callers can fall back to neutral copy
+ * instead of asserting a status we don't actually know.
+ */
+export async function fetchChatAvailability(): Promise<{ online: boolean } | null> {
+  if (!API_BASE_URL) return null;
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/status`, { signal: AbortSignal.timeout(4000) });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}

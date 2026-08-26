@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { PanchaMahabhutaScroll } from '../components/PanchaMahabhutaScroll';
 import { MorphingLogo } from '../components/MorphingLogo';
 import { useLogoMorphProgress } from '../hooks/useLogoMorphProgress';
+import { openChatPanel } from '../lib/chatPanel';
 
 export default function Home() {
   const heroLogoSlotRef = useRef<HTMLDivElement>(null);
@@ -144,6 +145,41 @@ export default function Home() {
               </div>
               <button className="bg-on-surface text-surface py-3 px-8 rounded-full font-headline font-bold text-sm">Get Directions</button>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Help & Support CTA */}
+      <section className="px-8 pb-32">
+        <div className="max-w-7xl mx-auto bg-on-surface rounded-xl p-12 md:p-20 text-center relative overflow-hidden">
+          <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full bg-primary/10 blur-[80px]"></div>
+          <div className="absolute -bottom-24 -right-24 w-64 h-64 rounded-full bg-tertiary/10 blur-[80px]"></div>
+
+          <div className="relative z-10">
+            <h2 className="font-headline text-4xl md:text-5xl font-bold text-white mb-8 tracking-tighter">
+              Have a Question?
+            </h2>
+            <p className="text-white/60 text-lg mb-12 max-w-xl mx-auto">
+              Browse answers on our Help Center, or chat with us directly and we'll get back to you right away.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+              <a
+                href="https://admin.agamagizhnaturecure.com/hc/agamagizh"
+                target="_blank"
+                rel="noreferrer"
+                className="w-full sm:w-auto px-10 py-5 bg-primary text-on-primary rounded-full font-headline font-bold text-lg shadow-xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3"
+              >
+                <span className="material-symbols-outlined">help</span>
+                Visit Help Center
+              </a>
+              <button
+                onClick={() => openChatPanel()}
+                className="w-full sm:w-auto px-10 py-5 bg-transparent border-2 border-white/20 text-white rounded-full font-headline font-bold text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3"
+              >
+                <span className="material-symbols-outlined">forum</span>
+                Chat with Us
+              </button>
+            </div>
           </div>
         </div>
       </section>

@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import appointmentsRouter from './routes/appointments.js';
 import inquiriesRouter from './routes/inquiries.js';
+import statusRouter from './routes/status.js';
 
 const app = express();
 const allowedOrigins = (process.env.CORS_ORIGIN ?? '').split(',').map((o) => o.trim()).filter(Boolean);
@@ -14,6 +15,7 @@ app.get('/health', (_req, res) => res.json({ ok: true }));
 
 app.use('/api/appointments', appointmentsRouter);
 app.use('/api/inquiries', inquiriesRouter);
+app.use('/api/status', statusRouter);
 
 const port = process.env.PORT ?? 8080;
 app.listen(port, () => {

@@ -6,6 +6,7 @@ import {
   Mail,
   MapPin,
   MessageCircle,
+  MessagesSquare,
   Phone,
   UserRound,
   X,
@@ -13,14 +14,17 @@ import {
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { siteConfig } from '../siteConfig';
+import { openChatPanel } from '../lib/chatPanel';
 
 type ActionItem = {
   label: string;
   href?: string;
   to?: string;
+  onClick?: () => void;
   icon: ComponentType<{ className?: string }>;
   external?: boolean;
   accentClass: string;
+  liveBadge?: boolean;
 };
 
 export default function FloatingContactRail() {
@@ -39,6 +43,13 @@ export default function FloatingContactRail() {
       icon: MessageCircle,
       external: true,
       accentClass: 'bg-emerald-500 text-white',
+    },
+    {
+      label: 'Chat with Us',
+      onClick: () => openChatPanel(),
+      icon: MessagesSquare,
+      accentClass: 'bg-gradient-to-br from-primary-fixed to-primary text-on-primary ring-2 ring-white/40',
+      liveBadge: true,
     },
     {
       label: 'Call',
@@ -86,7 +97,7 @@ export default function FloatingContactRail() {
       icon: UserRound,
       accentClass: 'bg-slate-800 text-white',
     },
-  ].filter((item) => item.href || item.to);
+  ].filter((item) => item.href || item.to || item.onClick);
 
   return (
     <div className="fixed bottom-6 right-4 z-50 sm:bottom-8 sm:right-6">
@@ -107,10 +118,18 @@ export default function FloatingContactRail() {
                     <span className="rounded-full bg-white/96 px-3 py-2 text-[11px] font-headline font-bold uppercase tracking-[0.18em] text-slate-700 shadow-[0_10px_25px_rgba(45,51,53,0.08)] backdrop-blur">
                       {action.label}
                     </span>
-                    <span
-                      className={`flex h-11 w-11 items-center justify-center rounded-full shadow-[0_18px_40px_rgba(45,51,53,0.16)] transition-transform duration-300 hover:scale-105 ${action.accentClass}`}
-                    >
-                      <Icon className="h-5 w-5" />
+                    <span className="relative">
+                      <span
+                        className={`flex h-11 w-11 items-center justify-center rounded-full shadow-[0_18px_40px_rgba(45,51,53,0.16)] transition-transform duration-300 hover:scale-105 ${action.accentClass}`}
+                      >
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      {action.liveBadge && (
+                        <span className="absolute -right-0.5 -top-0.5 flex h-3.5 w-3.5">
+                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                          <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-emerald-400 ring-2 ring-white" />
+                        </span>
+                      )}
                     </span>
                   </>
                 );
@@ -131,6 +150,29 @@ export default function FloatingContactRail() {
                       >
                         {content}
                       </Link>
+                    </motion.div>
+                  );
+                }
+
+                if (action.onClick) {
+                  return (
+                    <motion.div
+                      key={action.label}
+                      initial={{ opacity: 0, x: 12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 12 }}
+                      transition={{ duration: 0.18, delay: index * 0.03 }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setIsOpen(false);
+                          action.onClick?.();
+                        }}
+                        className="group flex items-center gap-3"
+                      >
+                        {content}
+                      </button>
                     </motion.div>
                   );
                 }

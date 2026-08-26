@@ -28,5 +28,29 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Chatwoot live chat widget -->
+    <script>
+      // Must be set before sdk.js runs — the SDK reads its bubble/position/
+      // locale options from this global, not from the run() call below.
+      // Our own "Chat with Us" trigger (FloatingContactRail) replaces
+      // Chatwoot's default launcher bubble, so we hide it here.
+      window.chatwootSettings = {
+        hideMessageBubble: true,
+      };
+      (function(d, t) {
+        var BASE_URL = "https://admin.agamagizhnaturecure.com";
+        var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+        g.src = BASE_URL + "/packs/js/sdk.js";
+        g.async = true;
+        s.parentNode.insertBefore(g, s);
+        g.onload = function () {
+          window.chatwootSDK.run({
+            websiteToken: "CqbKHGZveVSYcsHx9vLLabyg",
+            baseUrl: BASE_URL,
+          });
+        };
+      })(document, "script");
+    </script>
   </body>
 </html>

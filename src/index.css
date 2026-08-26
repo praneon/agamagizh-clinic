@@ -207,6 +207,30 @@
     0%, 100% { transform: rotate(-4deg); }
     50% { transform: rotate(5deg); }
 }
+/* Chat widget panel */
+@keyframes chat-breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+}
+@keyframes chat-panel-in {
+    from { opacity: 0; transform: translateY(10px) scale(0.985); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.chat-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.chat-scroll::-webkit-scrollbar {
+    display: none;
+}
+.chat-panel-bg {
+    background:
+      radial-gradient(circle at 35% 38%, rgba(160, 120, 255, 0.11), transparent 30%),
+      radial-gradient(circle at 68% 48%, rgba(92, 194, 216, 0.10), transparent 34%),
+      radial-gradient(circle at 50% 58%, rgba(139, 206, 132, 0.08), transparent 30%),
+      #fafafd;
+}
+
 @keyframes ambiance-leaf-fall {
     0% { transform: translate(0, -10%) rotate(0deg); opacity: 0; }
     10% { opacity: 0.9; }
