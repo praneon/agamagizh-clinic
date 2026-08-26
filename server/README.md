@@ -27,8 +27,9 @@ Chatwoot doesn't remove the need for a working WhatsApp Business Platform
 connection — it just becomes where that connection lives:
 
 1. Meta Business Manager account, **business-verified**.
-2. A Meta Developer app with the WhatsApp product, and a phone number
-   registered to it (not active on a regular WhatsApp app).
+2. A Meta Developer app with the WhatsApp product and an Embedded Signup
+   configuration. For the existing WhatsApp Business App number, use Meta's
+   supported Coexistence path; do not delete or manually register the number.
 3. Message templates created and **approved** in Meta Business Manager:
    `appointment_confirmation`, `appointment_reminder`, `inquiry_acknowledgement`
    (or whatever names you choose — just keep the `.env` below in sync).
@@ -37,15 +38,18 @@ connection — it just becomes where that connection lives:
 
 In `https://admin.agamagizhnaturecure.com` (already live):
 
-1. Settings → Inboxes → Add Inbox → WhatsApp.
-2. Enter the **Phone Number ID**, **Business Account ID**, and **Access
-   Token** from your Meta app's WhatsApp → API Setup page.
-3. Chatwoot will show you its own **webhook callback URL** — paste that into
-   Meta's WhatsApp → Configuration → Webhook, with a verify token of your
-   choosing. Subscribe to the `messages` field.
-4. Note the inbox's numeric ID from the URL
+1. In Chatwoot Super Admin, configure `WHATSAPP_APP_ID`,
+   `WHATSAPP_CONFIGURATION_ID`, and `WHATSAPP_APP_SECRET` from the Meta app.
+2. Go to Settings → Inboxes → Add Inbox → WhatsApp → WhatsApp Cloud and use
+   **Connect with WhatsApp Business**.
+3. Complete Meta's Embedded Signup and select the existing number only when
+   Meta explicitly presents it as eligible for Coexistence. Do not use the
+   manual registration/OTP flow for an active WhatsApp Business App number.
+4. Chatwoot automatically configures the production token and webhook. Ensure
+   the Meta app is subscribed to the `messages` webhook field.
+5. Note the inbox's numeric ID from the URL
    (`.../settings/inboxes/<id>/...`) → `CHATWOOT_WHATSAPP_INBOX_ID`.
-5. Once Meta approves your templates, Settings → Inboxes → (this inbox) →
+6. Once Meta approves your templates, Settings → Inboxes → (this inbox) →
    should list them for the account.
 
 ## 3. Get an API access token
