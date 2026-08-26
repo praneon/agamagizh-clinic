@@ -29,20 +29,24 @@ const TOPIC_ATTRIBUTES: Record<ChatTopic, string> = {
 // back — only a fresh/untouched iframe gets redirected. A returning
 // visitor with real conversation history can still resume it via
 // Chatwoot's own persistent launcher bubble, which we never touch here.
-function jumpToChatwootRoute() {
+// Returns true only when it actually kicked off a fresh navigation (i.e.
+// the iframe wasn't already on the form/messages) — callers use that to
+// know whether they need to wait a beat before revealing the widget.
+function jumpToChatwootRoute(): boolean {
   const iframe = document.getElementById('chatwoot_live_chat_widget') as HTMLIFrameElement | null;
-  if (!iframe) return;
+  if (!iframe) return false;
 
   const currentSrc = iframe.getAttribute('src') ?? '';
-  if (currentSrc.includes('#/messages') || currentSrc.includes('#/prechat-form')) return;
+  if (currentSrc.includes('#/messages') || currentSrc.includes('#/prechat-form')) return false;
 
   // Keep the existing origin/path/query (which may already carry a
   // cw_conversation param) and only change the hash — that keeps this a
   // same-document fragment navigation inside the iframe's Vue Router
   // instead of a full reload of the widget.
   const base = currentSrc.split('#')[0];
-  if (!base) return;
+  if (!base) return false;
   iframe.setAttribute('src', `${base}#/prechat-form`);
+  return true;
 }
 
 export default function ChatWidgetPanel() {
@@ -63,6 +67,31 @@ export default function ChatWidgetPanel() {
     };
   }, [isOpen]);
 
+  // Pre-warm the real Chatwoot widget's route the moment our panel opens,
+  // well before the visitor clicks "Start Conversation". The widget's
+  // pre-chat form is a lazily-loaded chunk — navigating it in the
+  // background while the visitor is still reading our panel means it's
+  // already rendered by the time we reveal it, instead of them briefly
+  // seeing Chatwoot's own default "Home" screen while that chunk loads.
+  useEffect(() => {
+    if (!isOpen) return;
+    let cancelled = false;
+    let attempts = 0;
+    const tryJump = () => {
+      if (cancelled) return;
+      if (document.getElementById('chatwoot_live_chat_widget')) {
+        jumpToChatwootRoute();
+        return;
+      }
+      attempts += 1;
+      if (attempts < 20) window.setTimeout(tryJump, 250); // widget script may still be loading
+    };
+    tryJump();
+    return () => {
+      cancelled = true;
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     if (!isOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {
@@ -73,11 +102,12 @@ export default function ChatWidgetPanel() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
-  const close = () => {
+  const close = (onClosed?: () => void) => {
     setIsClosing(true);
     window.setTimeout(() => {
       setIsOpen(false);
       setIsClosing(false);
+      onClosed?.();
     }, 180);
   };
 
@@ -97,9 +127,19 @@ export default function ChatWidgetPanel() {
   // in-widget links use, no server-side change needed.
   const startConversation = (topic: ChatTopic = 'general') => {
     window.$chatwoot?.setCustomAttributes({ requested_topic: TOPIC_ATTRIBUTES[topic] });
-    jumpToChatwootRoute();
-    window.$chatwoot?.toggle('open');
-    close();
+    // Normally the pre-warm effect above already moved the iframe to the
+    // form minutes/seconds ago, so this is a no-op and it opens instantly.
+    // If the visitor clicked faster than that (or the widget script was
+    // still loading), this fires the navigation just now — in which case
+    // give its lazy-loaded chunk a brief moment to render before revealing
+    // the widget, so it never opens on Chatwoot's own default screen.
+    const justNavigated = jumpToChatwootRoute();
+    // Close our panel fully *first*, then reveal the real widget — doing
+    // both at once made their two independent fade animations overlap into
+    // a jumbled double-exposure for a moment.
+    close(() => {
+      window.setTimeout(() => window.$chatwoot?.toggle('open'), justNavigated ? 350 : 0);
+    });
   };
 
   if (!isOpen) return null;
@@ -116,7 +156,7 @@ export default function ChatWidgetPanel() {
       }}
     >
       <div className="chat-scroll flex-1 overflow-y-auto p-6" style={{ overscrollBehavior: 'contain' }}>
-        <ChatHeader onClose={close} />
+        <ChatHeader onClose={() => close()} />
 
         <div className="mt-6">
           <ChatGreeting />
@@ -127,7 +167,7 @@ export default function ChatWidgetPanel() {
         </div>
 
         <div className="mt-5">
-          <QuickActions onClose={close} onOpenChat={startConversation} />
+          <QuickActions onClose={() => close()} onOpenChat={startConversation} />
         </div>
 
         <div className="mt-[18px]">
