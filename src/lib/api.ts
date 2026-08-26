@@ -40,6 +40,9 @@ export interface AppointmentPayload {
   phone: string;
   concern?: string;
   sessionLabel?: string;
+  consultationMode?: 'online' | 'clinic';
+  preferredDate?: string;
+  preferredTime?: string;
   whatsappConsent: boolean;
 }
 

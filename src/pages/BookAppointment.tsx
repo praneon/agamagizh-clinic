@@ -2,10 +2,34 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { submitAppointment, ApiError } from '../lib/api';
 import { isBackendConfigured } from '../lib/api';
+import { openChatPanel } from '../lib/chatPanel';
 import { openWhatsApp, whatsappLink } from '../lib/whatsapp';
 
+const consultationTimes = [
+  '09:00 AM',
+  '10:00 AM',
+  '11:00 AM',
+  '12:00 PM',
+  '03:00 PM',
+  '04:00 PM',
+  '05:00 PM',
+  '06:00 PM',
+] as const;
+
+const today = new Date();
+const minimumBookingDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+
 const BookAppointment = () => {
-  const [form, setForm] = useState({ name: '', age: '', phone: '', concern: '', whatsappConsent: false });
+  const [form, setForm] = useState({
+    name: '',
+    age: '',
+    phone: '',
+    concern: '',
+    consultationMode: 'online' as 'online' | 'clinic',
+    preferredDate: '',
+    preferredTime: '',
+    whatsappConsent: false,
+  });
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -15,15 +39,37 @@ const BookAppointment = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.phone.trim() || !form.whatsappConsent) {
+    if (!form.name.trim() || !form.phone.trim() || !form.preferredDate || !form.preferredTime || !form.whatsappConsent) {
       setStatus('error');
-      setErrorMessage('Please provide your details and confirm WhatsApp consent.');
+      setErrorMessage('Please provide your details, preferred slot, and confirm WhatsApp consent.');
+      return;
+    }
+
+    if (new Date(`${form.preferredDate}T12:00:00`).getDay() === 0) {
+      setStatus('error');
+      setErrorMessage('The clinic is closed on Sundays. Please choose Monday through Saturday.');
       return;
     }
 
     if (!isBackendConfigured) {
+      if (form.consultationMode === 'online') {
+        openChatPanel('general', {
+          appointment_type: 'Online video consultation',
+          preferred_date: form.preferredDate,
+          preferred_time: form.preferredTime,
+          booking_name: form.name.trim(),
+          booking_phone: form.phone.trim(),
+          booking_concern: form.concern.trim() || 'Not provided',
+        });
+        setStatus('success');
+        return;
+      }
+
       openWhatsApp([
         'Hello Agamagizh, I would like to request an appointment.',
+        'Appointment type: Clinic visit',
+        `Preferred date: ${form.preferredDate}`,
+        `Preferred time: ${form.preferredTime}`,
         `Name: ${form.name.trim()}`,
         form.age.trim() ? `Age: ${form.age.trim()}` : '',
         `Phone: ${form.phone.trim()}`,
@@ -36,7 +82,10 @@ const BookAppointment = () => {
     try {
       await submitAppointment(form);
       setStatus('success');
-      setForm({ name: '', age: '', phone: '', concern: '', whatsappConsent: false });
+      setForm({
+        name: '', age: '', phone: '', concern: '', consultationMode: 'online',
+        preferredDate: '', preferredTime: '', whatsappConsent: false,
+      });
     } catch (err) {
       setStatus('error');
       setErrorMessage(err instanceof ApiError ? err.message : 'Something went wrong. Please try again.');
@@ -79,7 +128,7 @@ const BookAppointment = () => {
       {/* Booking System Section */}
       <section className="max-w-7xl mx-auto px-8 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          {/* Left: Yoga Spots (Calendar interface) */}
+          {/* Left: appointment type and preferred slot */}
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -89,65 +138,70 @@ const BookAppointment = () => {
           >
             <div className="flex items-center gap-4">
               <span className="p-3 bg-secondary-container text-secondary rounded-xl">
-                <span className="material-symbols-outlined">self_improvement</span>
+                <span className="material-symbols-outlined">video_camera_front</span>
               </span>
               <div>
-                <h2 className="font-headline text-2xl font-bold text-on-surface">Yoga Spots</h2>
-                <p className="text-sm text-on-surface-variant">Select your preferred session time</p>
+                <h2 className="font-headline text-2xl font-bold text-on-surface">Choose Your Consultation</h2>
+                <p className="text-sm text-on-surface-variant">Request a suitable date and time</p>
               </div>
             </div>
             
             <div className="bg-surface-container-low rounded-xl p-8 border border-outline-variant/10 shadow-[0_20px_40px_rgba(45,51,53,0.06)]">
-              {/* Custom Calendar UI */}
-              <div className="mb-6 flex justify-between items-center">
-                <span className="font-bold text-on-surface">November 2024</span>
-                <div className="flex gap-2">
-                  <button className="p-2 hover:bg-surface-container rounded-full transition-colors"><span className="material-symbols-outlined">chevron_left</span></button>
-                  <button className="p-2 hover:bg-surface-container rounded-full transition-colors"><span className="material-symbols-outlined">chevron_right</span></button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                {([
+                  ['online', 'video_camera_front', 'Online Consultation', 'Video call inside Agamagizh chat'],
+                  ['clinic', 'local_hospital', 'Clinic Visit', 'Visit us in Kallakurichi'],
+                ] as const).map(([value, icon, label, description]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setForm((prev) => ({ ...prev, consultationMode: value }))}
+                    className={`rounded-xl border p-5 text-left transition-all ${form.consultationMode === value ? 'border-primary bg-white shadow-lg shadow-primary/10' : 'border-transparent bg-white/50 hover:border-primary/20'}`}
+                    aria-pressed={form.consultationMode === value}
+                  >
+                    <span className="material-symbols-outlined text-primary" aria-hidden="true">{icon}</span>
+                    <span className="mt-3 block font-headline font-bold">{label}</span>
+                    <span className="mt-1 block text-xs text-on-surface-variant">{description}</span>
+                  </button>
+                ))}
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="space-y-2">
+                  <label htmlFor="preferred-date" className="text-xs uppercase tracking-[0.1em] font-bold text-outline">Preferred date</label>
+                  <input
+                    id="preferred-date"
+                    type="date"
+                    min={minimumBookingDate}
+                    value={form.preferredDate}
+                    onChange={handleChange('preferredDate')}
+                    className="w-full rounded-lg border-none bg-white p-4 focus:ring-2 focus:ring-primary/20"
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="preferred-time" className="text-xs uppercase tracking-[0.1em] font-bold text-outline">Preferred time</label>
+                  <select
+                    id="preferred-time"
+                    value={form.preferredTime}
+                    onChange={(event) => setForm((prev) => ({ ...prev, preferredTime: event.target.value }))}
+                    className="w-full rounded-lg border-none bg-white p-4 focus:ring-2 focus:ring-primary/20"
+                    required
+                  >
+                    <option value="">Select a time</option>
+                    {consultationTimes.map((time) => <option key={time} value={time}>{time}</option>)}
+                  </select>
                 </div>
               </div>
-              
-              <div className="grid grid-cols-7 gap-2 mb-8">
-                {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, i) => (
-                  <div key={i} className="text-center text-[10px] uppercase tracking-widest text-outline font-bold py-2">{day}</div>
-                ))}
-                
-                {/* Placeholder dates */}
-                {[28, 29, 30, 31].map((date) => (
-                  <div key={`prev-${date}`} className="h-10 flex items-center justify-center text-sm text-outline/30">{date}</div>
-                ))}
-                
-                {[1, 2, 3, 4].map((date) => (
-                  <button key={`curr-${date}`} className="h-10 flex items-center justify-center text-sm rounded-lg hover:bg-white transition-all">{date}</button>
-                ))}
-                
-                <button className="h-10 flex items-center justify-center text-sm rounded-lg bg-primary text-white font-bold shadow-lg shadow-primary/20">5</button>
-                
-                {[6, 7, 8, 9, 10].map((date) => (
-                  <button key={`curr-${date}`} className="h-10 flex items-center justify-center text-sm rounded-lg hover:bg-white transition-all">{date}</button>
-                ))}
-              </div>
-              
-              <div className="space-y-4">
-                <h3 className="text-xs uppercase tracking-[0.1em] font-bold text-outline">Available Sessions</h3>
-                <div className="grid grid-cols-2 gap-3">
-                  <button className="flex flex-col p-4 bg-white rounded-lg border border-transparent hover:border-primary transition-all text-left">
-                    <span className="text-xs font-bold text-primary">06:30 AM</span>
-                    <span className="text-sm font-bold mt-1">Surya Namaskar</span>
-                    <span className="text-[10px] text-on-surface-variant">4 Spots Left</span>
-                  </button>
-                  <button className="flex flex-col p-4 bg-white rounded-lg border border-transparent hover:border-primary transition-all text-left opacity-60">
-                    <span className="text-xs font-bold text-outline">08:00 AM</span>
-                    <span className="text-sm font-bold mt-1">Deep Flow</span>
-                    <span className="text-[10px] text-error font-bold">Fully Booked</span>
-                  </button>
-                  <button className="flex flex-col p-4 bg-white rounded-lg border border-transparent hover:border-primary transition-all text-left">
-                    <span className="text-xs font-bold text-primary">05:30 PM</span>
-                    <span className="text-sm font-bold mt-1">Evening Restorative</span>
-                    <span className="text-[10px] text-on-surface-variant">12 Spots Left</span>
-                  </button>
+              <p className="mt-5 text-xs leading-relaxed text-on-surface-variant">
+                This is a preferred slot request. Our team will confirm availability. The clinic is closed on Sundays and public holidays.
+              </p>
+              {form.consultationMode === 'online' && (
+                <div className="mt-5 flex gap-3 rounded-xl bg-primary/5 p-4 text-sm text-on-surface-variant">
+                  <span className="material-symbols-outlined text-primary" aria-hidden="true">lock</span>
+                  <p>Your confirmed consultation will use the built-in video-call invitation inside Agamagizh chat—no Google Meet needed.</p>
                 </div>
-              </div>
+              )}
             </div>
           </motion.div>
 
@@ -235,7 +289,9 @@ const BookAppointment = () => {
               </button>
               {status === 'success' && (
                 <p className="text-sm text-center text-primary font-bold">
-                  Request received! We'll confirm your slot on WhatsApp shortly.
+                  {form.consultationMode === 'online'
+                    ? 'Continue in the Agamagizh chat panel to start your booking conversation. We will confirm the slot there.'
+                    : "Request received! We'll confirm your slot on WhatsApp shortly."}
                 </p>
               )}
               {status === 'error' && (

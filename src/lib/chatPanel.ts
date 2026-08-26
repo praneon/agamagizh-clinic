@@ -7,7 +7,17 @@ type Listener = (topic: ChatTopic) => void;
 
 let listeners: Listener[] = [];
 
-export function openChatPanel(topic: ChatTopic = 'general') {
+export function openChatPanel(topic: ChatTopic = 'general', attributes?: Record<string, string>) {
+  if (attributes) {
+    const applyAttributes = (attempt = 0) => {
+      if (window.$chatwoot?.hasLoaded) {
+        window.$chatwoot.setCustomAttributes(attributes);
+        return;
+      }
+      if (attempt < 40) window.setTimeout(() => applyAttributes(attempt + 1), 100);
+    };
+    applyAttributes();
+  }
   listeners.forEach((listener) => listener(topic));
 }
 
