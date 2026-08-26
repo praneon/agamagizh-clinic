@@ -145,10 +145,10 @@ const Contact = () => {
                 {contact.clinicAddressLines[1]}
               </p>
               <div className="mt-auto">
-                <button className="flex items-center gap-2 text-primary font-bold text-sm hover:underline underline-offset-4">
+                <a href={contact.mapsUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-primary font-bold text-sm hover:underline underline-offset-4">
                   <span className="material-symbols-outlined text-[18px]">near_me</span>
                   Get Directions
-                </button>
+                </a>
               </div>
             </div>
           </motion.div>
@@ -179,10 +179,10 @@ const Contact = () => {
                 {contact.yogaStudioAddressLines[1]}
               </p>
               <div className="mt-auto">
-                <button className="flex items-center gap-2 text-secondary font-bold text-sm hover:underline underline-offset-4">
+                <a href={contact.mapsUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-secondary font-bold text-sm hover:underline underline-offset-4">
                   <span className="material-symbols-outlined text-[18px]">near_me</span>
                   Get Directions
-                </button>
+                </a>
               </div>
             </div>
           </motion.div>
@@ -297,24 +297,7 @@ const Contact = () => {
             <p className="text-xs text-on-surface-variant">Find us in the heart of the city</p>
           </div>
           
-          {/* Interactive Elements Placeholder for Map */}
-          <div className="absolute inset-0 bg-slate-200">
-            <img 
-              className="w-full h-full object-cover grayscale opacity-60" 
-              src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1000&auto=format&fit=crop"
-              alt="Map"
-              referrerPolicy="no-referrer"
-            />
-          </div>
-          
-          {/* Custom Marker */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center animate-pulse">
-              <div className="w-8 h-8 bg-primary rounded-full border-4 border-white shadow-lg flex items-center justify-center">
-                <span className="material-symbols-outlined text-white text-[16px]" style={{ fontVariationSettings: "'FILL' 1" }}>local_hospital</span>
-              </div>
-            </div>
-          </div>
+          <iframe className="absolute inset-0 h-full w-full border-0" src={contact.mapsEmbedUrl} title="Agamagizh clinic on Google Maps" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen />
         </div>
       </motion.section>
 

@@ -56,6 +56,24 @@ export const submitAppointment = (payload: AppointmentPayload) =>
 export const submitInquiry = (payload: InquiryPayload) =>
   post<{ id: string }>('/api/inquiries', payload);
 
+export interface DataDeletionPayload {
+  name: string;
+  phone: string;
+  email?: string;
+  details?: string;
+  website?: string;
+}
+
+export async function submitDataDeletionRequest(payload: DataDeletionPayload) {
+  const res = await fetch('https://admin.agamagizhnaturecure.com/public/api/v1/data_deletion_requests', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ data_deletion_request: payload }),
+  });
+  if (!res.ok) throw new ApiError('We could not submit your request. Please call or WhatsApp us.', res.status);
+  return res.json() as Promise<{ id: number; status: string; message: string }>;
+}
+
 /**
  * Real Chatwoot agent presence, via our own bridge (the widget SDK has no
  * public API for this). Returns null — not "offline" — when the bridge

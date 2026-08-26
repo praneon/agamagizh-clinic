@@ -2,7 +2,7 @@ export const siteConfig = {
   contact: {
     phoneDisplay: '+91 81977 68466',
     phoneE164: '+918197768466',
-    email: '',
+    email: 'care@agamagizhnaturecure.com',
     whatsappNumber: '918197768466',
     whatsappUrl: 'https://wa.me/918197768466',
     addressLines: [
@@ -15,10 +15,11 @@ export const siteConfig = {
       'Tamil Nadu, 606202',
     ],
     clinicAddressLines: [
-      'Raja Nagar, Kallakurichi.',
-      'Tamil Nadu, 606202',
+      'No 243 2, Near MRN Nagar, Durugam Road,',
+      'Puthumariyamman Kovil Street, Raja Nagar, Kallakurichi - 606202.',
     ],
     mapsUrl: 'https://maps.app.goo.gl/dT8iHJi9Q4CqZhSw6',
+    mapsEmbedUrl: 'https://www.google.com/maps?q=11.73634,78.9686374&z=17&output=embed',
   },
   social: {
     instagramUrl: 'https://www.instagram.com/agamagizh23/',
