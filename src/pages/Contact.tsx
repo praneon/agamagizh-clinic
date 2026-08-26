@@ -78,18 +78,20 @@ const Contact = () => {
               <div className="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-secondary">
                 <span className="material-symbols-outlined">call</span>
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <p className="text-[0.65rem] uppercase font-bold tracking-widest text-outline">Phone Support</p>
                 <p className="text-xl font-headline font-bold text-on-surface">{contact.phoneDisplay}</p>
               </div>
             </div>
-            {contact.email && <div className="flex items-center gap-4 mb-8">
+            {contact.email && <div className="mb-8 flex items-start gap-4">
               <div className="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
                 <span className="material-symbols-outlined">mail</span>
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <p className="text-[0.65rem] uppercase font-bold tracking-widest text-outline">Clinical Email</p>
-                <p className="text-xl font-headline font-bold text-on-surface">{contact.email}</p>
+                <a className="block break-all font-headline text-base font-bold leading-snug text-on-surface hover:text-primary sm:text-lg" href={`mailto:${contact.email}`}>
+                  {contact.email}
+                </a>
               </div>
             </div>}
             <a className="block w-full py-4 bg-tertiary text-on-tertiary rounded-full text-center font-bold tracking-wide hover:opacity-90 transition-all flex items-center justify-center gap-2" href={contact.whatsappUrl}>
@@ -104,15 +106,11 @@ const Contact = () => {
               <h3 className="font-headline font-bold text-on-surface">Clinical Hours</h3>
             </div>
             <div className="space-y-3 text-on-surface-variant font-medium">
-              <div className="flex justify-between border-b border-primary/10 pb-2">
-                <span>Morning</span>
-                <span className="text-on-surface">9:00 AM – 1:00 PM</span>
+              <div className="flex justify-between gap-4 border-b border-primary/10 pb-2">
+                <span>Monday – Sunday</span>
+                <span className="whitespace-nowrap text-on-surface">9:00 AM – 7:00 PM</span>
               </div>
-              <div className="flex justify-between pt-1">
-                <span>Evening</span>
-                <span className="text-on-surface">3:00 PM – 7:00 PM</span>
-              </div>
-              <p className="text-[0.7rem] italic mt-4 opacity-70">Closed on Sundays & Public Holidays</p>
+              <p className="mt-4 text-[0.7rem] italic opacity-70">Appointments are recommended before visiting.</p>
             </div>
           </div>
         </motion.div>
