@@ -4,6 +4,22 @@ import { PanchaMahabhutaScroll } from '../components/PanchaMahabhutaScroll';
 import { MorphingLogo } from '../components/MorphingLogo';
 import { useLogoMorphProgress } from '../hooks/useLogoMorphProgress';
 import { openChatPanel } from '../lib/chatPanel';
+import { siteConfig } from '../siteConfig';
+
+const patientReviews = [
+  {
+    quote: 'The communication was clear and effective.',
+    reviewer: 'Papitha',
+  },
+  {
+    quote: 'The clinic has good facilities and is very clean and hygienic.',
+    reviewer: 'Sujitha Dass',
+  },
+  {
+    quote: 'Doctors and therapists are caring and friendly.',
+    reviewer: 'Arul Merlin',
+  },
+] as const;
 
 export default function Home() {
   const heroLogoSlotRef = useRef<HTMLDivElement>(null);
@@ -57,42 +73,64 @@ export default function Home() {
         logoRevealProgress={logoMorphProgress}
       />
 
-      {/* Trust Bar / Testimonials */}
+      {/* Selected public patient reviews */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-8">
-          <div className="flex flex-col lg:flex-row items-center justify-between mb-16 gap-8 text-center lg:text-left">
-            <div className="flex flex-col items-center lg:items-start">
+          <div className="flex flex-col lg:flex-row items-center justify-between mb-12 gap-8 text-center lg:text-left">
+            <div className="flex flex-col items-center lg:items-start max-w-2xl">
               <div className="flex items-center gap-1 mb-2">
-                <span className="material-symbols-outlined text-error" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                <span className="material-symbols-outlined text-error" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                <span className="material-symbols-outlined text-error" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                <span className="material-symbols-outlined text-error" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
-                <span className="material-symbols-outlined text-error" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <span
+                    key={index}
+                    className="material-symbols-outlined text-error"
+                    style={{ fontVariationSettings: "'FILL' 1" }}
+                    aria-hidden="true"
+                  >
+                    star
+                  </span>
+                ))}
               </div>
-              <p className="font-headline text-2xl font-bold">5.0 Star Rating from 377+ Patients</p>
+              <h2 className="font-headline text-3xl font-bold">Words from our patients</h2>
+              <p className="font-body text-on-surface-variant mt-2">A selection of positive feedback shared on public review listings.</p>
             </div>
             <div className="h-px flex-grow bg-surface-container-high mx-8 hidden lg:block"></div>
-            <div className="flex -space-x-4 justify-center">
-              <img alt="Patient" className="w-12 h-12 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDduph0s7AheIPwEFR4UokA2-dKsJ0tPxbPyKJoMfhS-D1WZ0_GoDhx0oyjZDS50Kabj1kbrDTGW1YvI9qZ1lSHJXr8H7Virq4QGUg_4PS8POSY49ln6BYxRhQ7hlLDaAO7ZdUcqSn5IrudDwu-kKRnS7X8NdKAe0rabwQfaUQZ623U8J8Y7t17y9HYyabTJQ4IG_WsHZGcZYhDUm_allumdzk2j5zNv17Cp3ilFgMleWLq3jNPERe8uS2TVou39L-roYvvOkR9LYc"/>
-              <img alt="Patient" className="w-12 h-12 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHIV0rpYMtPxrSIgLBejzpWEN630Aei8UI88PGwHDFhCrUb070G-Z869LPECndh28UzoGWpGUHbk1yh2r2ubz5YIwX2jfpsWYjMR09nIN3zRP-YSUPFKXmvTSfAvUlOJZjf3iHZEkxRfeyFDMPvisxyTDOsR08KBia-JFJiMfuD9QJEcNN-KOeqM7t-10rI11-ExaqVNU4R4bxCLQZ9umC3B3FgoLfbIEGkCvPqWr45RhOR5Sbitc__0nnIwB_pByBR_JEpvSO4l4"/>
-              <img alt="Patient" className="w-12 h-12 rounded-full border-2 border-white object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkqPt0MS47KBIKvRIXc5JkhjwxWElCCS7SSMpTzkB5OvRlyW4xwTAL7nJFGRdj2asM7miBiqhnB_h8XQ3DU5-8l8SWww-Aw6CxliKR2yA28KIFmvLxHDSPWdtLvpmyPLsK7QSPWL_uGcVWmgsQM58uj9cpWSYOChwRZcwelhVZY3BgDs5Va1myszTdC8y0suOh7Gv2dm769ey0_xoVS8TdnLwrNWOb8WtUH7aDSaoe-kHbMgPogdekhQg0kmgRuihBUHwJeDOPaak"/>
-              <div className="w-12 h-12 rounded-full border-2 border-white bg-surface-container-low flex items-center justify-center text-[10px] font-bold">+374</div>
-            </div>
+            <a
+              href={siteConfig.contact.mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-primary/20 px-6 py-3 font-headline text-sm font-bold text-primary transition-colors hover:bg-primary hover:text-on-primary"
+            >
+              View on Google Maps
+              <span className="material-symbols-outlined text-base" aria-hidden="true">open_in_new</span>
+            </a>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-8 rounded-xl bg-surface-container-low/50 border border-transparent hover:border-primary/10 transition-all">
-              <p className="font-body italic text-on-surface-variant mb-6">"Agamagizh changed my perspective on chronic fatigue. The elemental approach is scientific yet deeply spiritual."</p>
-              <p className="font-headline text-sm font-bold">— Dr. Ananya Sharma</p>
-            </div>
-            <div className="p-8 rounded-xl bg-surface-container-low/50 border border-transparent hover:border-primary/10 transition-all">
-              <p className="font-body italic text-on-surface-variant mb-6">"The yoga sessions here aren't just exercise; they are a recalibration of your soul. Truly a sanctuary."</p>
-              <p className="font-headline text-sm font-bold">— Rajesh K. Raman</p>
-            </div>
-            <div className="p-8 rounded-xl bg-surface-container-low/50 border border-transparent hover:border-primary/10 transition-all">
-              <p className="font-body italic text-on-surface-variant mb-6">"Finally, a clinic that doesn't feel clinical. It feels like coming home to yourself."</p>
-              <p className="font-headline text-sm font-bold">— Meera Vasudevan</p>
-            </div>
+            {patientReviews.map((review) => (
+              <figure
+                key={review.reviewer}
+                className="flex min-h-56 flex-col justify-between rounded-xl border border-transparent bg-surface-container-low/50 p-8 transition-all hover:border-primary/10"
+              >
+                <div>
+                  <div className="mb-5 flex gap-0.5" aria-label="5 out of 5 stars">
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <span
+                        key={index}
+                        className="material-symbols-outlined text-lg text-error"
+                        style={{ fontVariationSettings: "'FILL' 1" }}
+                        aria-hidden="true"
+                      >
+                        star
+                      </span>
+                    ))}
+                  </div>
+                  <blockquote className="font-body text-lg italic leading-relaxed text-on-surface-variant">
+                    “{review.quote}”
+                  </blockquote>
+                </div>
+                <figcaption className="mt-6 font-headline text-sm font-bold">— {review.reviewer}</figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>
