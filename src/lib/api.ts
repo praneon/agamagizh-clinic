@@ -2,6 +2,7 @@
 // appointment/inquiry storage and WhatsApp sending. Set VITE_API_BASE_URL
 // in your .env (see .env.example) once the backend is deployed.
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
+export const isBackendConfigured = Boolean(API_BASE_URL);
 
 export class ApiError extends Error {
   status: number;

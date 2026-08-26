@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { siteConfig } from '../siteConfig';
 import { submitInquiry, ApiError } from '../lib/api';
+import { isBackendConfigured } from '../lib/api';
+import { openWhatsApp, whatsappLink } from '../lib/whatsapp';
+import { Link } from 'react-router-dom';
 
 const Contact = () => {
   const { contact } = siteConfig;
@@ -18,6 +21,17 @@ const Contact = () => {
     if (!form.name.trim() || !form.phone.trim() || !form.message.trim() || !form.whatsappConsent) {
       setStatus('error');
       setErrorMessage('Please complete the required fields and confirm WhatsApp consent.');
+      return;
+    }
+
+    if (!isBackendConfigured) {
+      openWhatsApp([
+        'Hello Agamagizh, I would like to make an enquiry.',
+        `Name: ${form.name.trim()}`,
+        `Phone: ${form.phone.trim()}`,
+        form.email.trim() ? `Email: ${form.email.trim()}` : '',
+        `Message: ${form.message.trim()}`,
+      ].filter(Boolean).join('\n'));
       return;
     }
 
@@ -96,7 +110,7 @@ const Contact = () => {
                 </a>
               </div>
             </div>}
-            <a className="block w-full py-4 bg-tertiary text-on-tertiary rounded-full text-center font-bold tracking-wide hover:opacity-90 transition-all flex items-center justify-center gap-2" href={contact.whatsappUrl}>
+            <a className="block w-full py-4 bg-tertiary text-on-tertiary rounded-full text-center font-bold tracking-wide hover:opacity-90 transition-all flex items-center justify-center gap-2" href={whatsappLink('Hello Agamagizh, I would like to know more about your treatments.')} target="_blank" rel="noreferrer">
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
               Chat on WhatsApp
             </a>
@@ -321,13 +335,13 @@ const Contact = () => {
             Consultations are by appointment only. Secure your slot today to speak with our certified practitioners.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <button className="w-full sm:w-auto px-10 py-5 bg-primary text-on-primary rounded-full font-headline font-bold text-lg shadow-xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all">
+            <Link to="/book-appointment" className="w-full sm:w-auto px-10 py-5 bg-primary text-on-primary rounded-full font-headline font-bold text-lg shadow-xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all">
               Book Appointment
-            </button>
-            <button className="w-full sm:w-auto px-10 py-5 bg-transparent border-2 border-white/20 text-white rounded-full font-headline font-bold text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3">
+            </Link>
+            <a href={whatsappLink('Hello Agamagizh, I would like to speak with your care team.')} target="_blank" rel="noreferrer" className="w-full sm:w-auto px-10 py-5 bg-transparent border-2 border-white/20 text-white rounded-full font-headline font-bold text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3">
               <span className="material-symbols-outlined">forum</span>
               Chat on WhatsApp
-            </button>
+            </a>
           </div>
         </div>
       </motion.section>

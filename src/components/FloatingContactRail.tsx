@@ -15,6 +15,7 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import { siteConfig } from '../siteConfig';
 import { openChatPanel } from '../lib/chatPanel';
+import { whatsappLink } from '../lib/whatsapp';
 
 type ActionItem = {
   label: string;
@@ -39,7 +40,7 @@ export default function FloatingContactRail() {
   const actions: ActionItem[] = [
     {
       label: 'WhatsApp',
-      href: contact.whatsappUrl,
+      href: whatsappLink('Hello Agamagizh, I would like to know more about your treatments.'),
       icon: MessageCircle,
       external: true,
       accentClass: 'bg-emerald-500 text-white',
@@ -93,7 +94,8 @@ export default function FloatingContactRail() {
     },
     {
       label: 'Contact Us',
-      to: '/contact',
+      href: whatsappLink('Hello Agamagizh, I would like to contact your care team.'),
+      external: true,
       icon: UserRound,
       accentClass: 'bg-slate-800 text-white',
     },

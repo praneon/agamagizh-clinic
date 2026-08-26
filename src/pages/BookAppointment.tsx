@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { submitAppointment, ApiError } from '../lib/api';
-import { siteConfig } from '../siteConfig';
+import { isBackendConfigured } from '../lib/api';
+import { openWhatsApp, whatsappLink } from '../lib/whatsapp';
 
 const BookAppointment = () => {
   const [form, setForm] = useState({ name: '', age: '', phone: '', concern: '', whatsappConsent: false });
@@ -17,6 +18,17 @@ const BookAppointment = () => {
     if (!form.name.trim() || !form.phone.trim() || !form.whatsappConsent) {
       setStatus('error');
       setErrorMessage('Please provide your details and confirm WhatsApp consent.');
+      return;
+    }
+
+    if (!isBackendConfigured) {
+      openWhatsApp([
+        'Hello Agamagizh, I would like to request an appointment.',
+        `Name: ${form.name.trim()}`,
+        form.age.trim() ? `Age: ${form.age.trim()}` : '',
+        `Phone: ${form.phone.trim()}`,
+        form.concern.trim() ? `Health concern: ${form.concern.trim()}` : '',
+      ].filter(Boolean).join('\n'));
       return;
     }
 
@@ -251,7 +263,7 @@ const BookAppointment = () => {
         >
           <h3 className="font-headline text-3xl font-bold text-on-surface">Need Immediate Assistance?</h3>
           <p className="text-on-surface-variant font-light">Speak directly with our care coordinators for urgent bookings or special clinical inquiries.</p>
-          <a className="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-5 rounded-full font-bold hover:scale-105 transition-transform shadow-xl shadow-[#25D366]/20" href={siteConfig.contact.whatsappUrl} target="_blank" rel="noreferrer">
+          <a className="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-5 rounded-full font-bold hover:scale-105 transition-transform shadow-xl shadow-[#25D366]/20" href={whatsappLink('Hello Agamagizh, I need help booking an appointment.')} target="_blank" rel="noreferrer">
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
             Message on WhatsApp
           </a>
