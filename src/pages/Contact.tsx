@@ -80,7 +80,9 @@ const Contact = () => {
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-[0.65rem] uppercase font-bold tracking-widest text-outline">Phone Support</p>
-                <p className="text-xl font-headline font-bold text-on-surface">{contact.phoneDisplay}</p>
+                <a className="font-headline text-xl font-bold text-on-surface hover:text-primary" href={`tel:${contact.phoneE164}`}>
+                  {contact.phoneDisplay}
+                </a>
               </div>
             </div>
             {contact.email && <div className="mb-8 flex items-start gap-4">
@@ -89,7 +91,7 @@ const Contact = () => {
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-[0.65rem] uppercase font-bold tracking-widest text-outline">Clinical Email</p>
-                <a className="block break-all font-headline text-base font-bold leading-snug text-on-surface hover:text-primary sm:text-lg" href={`mailto:${contact.email}`}>
+                <a className="block whitespace-nowrap font-headline text-[0.72rem] font-bold leading-snug tracking-tight text-on-surface hover:text-primary sm:text-sm" href={`mailto:${contact.email}`}>
                   {contact.email}
                 </a>
               </div>
