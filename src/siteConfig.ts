@@ -1,10 +1,10 @@
 export const siteConfig = {
   contact: {
-    phoneDisplay: '+91 98765 43210',
-    phoneE164: '+919876543210',
-    email: 'care@agamagizh.com',
-    whatsappNumber: '919876543210',
-    whatsappUrl: 'https://wa.me/919876543210',
+    phoneDisplay: '+91 81977 68466',
+    phoneE164: '+918197768466',
+    email: '',
+    whatsappNumber: '918197768466',
+    whatsappUrl: 'https://wa.me/918197768466',
     addressLines: [
       'No 243 2, Near MRN Nagar, Durugam Road,',
       'Puthumariyamman Kovil Street, Raja Nagar,',

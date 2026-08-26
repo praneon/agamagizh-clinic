@@ -20,7 +20,7 @@ const PrivacyPolicy = () => {
         <h1 className="font-headline text-4xl md:text-6xl font-bold text-on-surface tracking-tighter leading-[1.1] mb-4">
           Privacy Policy
         </h1>
-        <p className="text-on-surface-variant text-sm">Last updated: 24 August 2026</p>
+        <p className="text-on-surface-variant text-sm">Last updated: 26 August 2026</p>
       </header>
 
       <div className="space-y-12">
@@ -29,8 +29,8 @@ const PrivacyPolicy = () => {
             This Privacy Policy explains how Agamagizh Naturopathy &amp; Yoga ("Agamagizh", "we", "us", "our"),
             operating our clinic and yoga studio in Kallakurichi, Tamil Nadu, collects, uses, stores, and shares
             personal data of visitors to our website and users of our messaging channels, including WhatsApp.
-            This policy is published in accordance with the Digital Personal Data Protection Act, 2023 (DPDP Act)
-            and applicable rules of India.
+            This policy explains our data practices under applicable Indian law, including the Digital Personal
+            Data Protection Act, 2023 and rules in force from time to time.
           </p>
         </Section>
 
@@ -129,7 +129,7 @@ const PrivacyPolicy = () => {
             For any questions about this Privacy Policy or to exercise your data rights, contact us at:
           </p>
           <ul className="list-none space-y-1">
-            <li><strong>Email:</strong> {contact.email}</li>
+            {contact.email && <li><strong>Email:</strong> {contact.email}</li>}
             <li><strong>Phone:</strong> {contact.phoneDisplay}</li>
             <li>
               <strong>Address:</strong> {contact.addressLines[0]} {contact.addressLines[1]} {contact.addressLines[2]}

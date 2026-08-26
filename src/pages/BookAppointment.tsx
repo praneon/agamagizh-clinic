@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { submitAppointment, ApiError } from '../lib/api';
+import { siteConfig } from '../siteConfig';
 
 const BookAppointment = () => {
-  const [form, setForm] = useState({ name: '', age: '', phone: '', concern: '' });
+  const [form, setForm] = useState({ name: '', age: '', phone: '', concern: '', whatsappConsent: false });
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -13,9 +14,9 @@ const BookAppointment = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.phone.trim()) {
+    if (!form.name.trim() || !form.phone.trim() || !form.whatsappConsent) {
       setStatus('error');
-      setErrorMessage('Please provide your name and contact number.');
+      setErrorMessage('Please provide your details and confirm WhatsApp consent.');
       return;
     }
 
@@ -23,7 +24,7 @@ const BookAppointment = () => {
     try {
       await submitAppointment(form);
       setStatus('success');
-      setForm({ name: '', age: '', phone: '', concern: '' });
+      setForm({ name: '', age: '', phone: '', concern: '', whatsappConsent: false });
     } catch (err) {
       setStatus('error');
       setErrorMessage(err instanceof ApiError ? err.message : 'Something went wrong. Please try again.');
@@ -190,6 +191,18 @@ const BookAppointment = () => {
                   onChange={handleChange('concern')}
                 ></textarea>
               </div>
+              <label className="flex items-start gap-3 text-sm text-on-surface-variant">
+                <input
+                  className="mt-1 rounded border-outline text-primary focus:ring-primary"
+                  type="checkbox"
+                  checked={form.whatsappConsent}
+                  onChange={(event) => setForm((prev) => ({ ...prev, whatsappConsent: event.target.checked }))}
+                  required
+                />
+                <span>
+                  I agree to receive appointment confirmations and reminders by WhatsApp. I can opt out at any time by replying STOP.
+                </span>
+              </label>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-outline uppercase tracking-wider">Contact Number</label>
                 <input
@@ -238,7 +251,7 @@ const BookAppointment = () => {
         >
           <h3 className="font-headline text-3xl font-bold text-on-surface">Need Immediate Assistance?</h3>
           <p className="text-on-surface-variant font-light">Speak directly with our care coordinators for urgent bookings or special clinical inquiries.</p>
-          <a className="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-5 rounded-full font-bold hover:scale-105 transition-transform shadow-xl shadow-[#25D366]/20" href="#">
+          <a className="inline-flex items-center gap-3 bg-[#25D366] text-white px-10 py-5 rounded-full font-bold hover:scale-105 transition-transform shadow-xl shadow-[#25D366]/20" href={siteConfig.contact.whatsappUrl} target="_blank" rel="noreferrer">
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
             Message on WhatsApp
           </a>

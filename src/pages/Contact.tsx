@@ -5,7 +5,7 @@ import { submitInquiry, ApiError } from '../lib/api';
 
 const Contact = () => {
   const { contact } = siteConfig;
-  const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' });
+  const [form, setForm] = useState({ name: '', phone: '', email: '', message: '', whatsappConsent: false });
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -15,9 +15,9 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.phone.trim() || !form.message.trim()) {
+    if (!form.name.trim() || !form.phone.trim() || !form.message.trim() || !form.whatsappConsent) {
       setStatus('error');
-      setErrorMessage('Please fill in your name, phone number, and message.');
+      setErrorMessage('Please complete the required fields and confirm WhatsApp consent.');
       return;
     }
 
@@ -25,7 +25,7 @@ const Contact = () => {
     try {
       await submitInquiry(form);
       setStatus('success');
-      setForm({ name: '', phone: '', email: '', message: '' });
+      setForm({ name: '', phone: '', email: '', message: '', whatsappConsent: false });
     } catch (err) {
       setStatus('error');
       setErrorMessage(err instanceof ApiError ? err.message : 'Something went wrong. Please try again.');
@@ -83,7 +83,7 @@ const Contact = () => {
                 <p className="text-xl font-headline font-bold text-on-surface">{contact.phoneDisplay}</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 mb-8">
+            {contact.email && <div className="flex items-center gap-4 mb-8">
               <div className="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary">
                 <span className="material-symbols-outlined">mail</span>
               </div>
@@ -91,7 +91,7 @@ const Contact = () => {
                 <p className="text-[0.65rem] uppercase font-bold tracking-widest text-outline">Clinical Email</p>
                 <p className="text-xl font-headline font-bold text-on-surface">{contact.email}</p>
               </div>
-            </div>
+            </div>}
             <a className="block w-full py-4 bg-tertiary text-on-tertiary rounded-full text-center font-bold tracking-wide hover:opacity-90 transition-all flex items-center justify-center gap-2" href={contact.whatsappUrl}>
               <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>chat</span>
               Chat on WhatsApp
@@ -236,6 +236,18 @@ const Contact = () => {
               onChange={handleChange('email')}
             />
           </div>
+          <label className="flex items-start gap-3 text-sm text-on-surface-variant">
+            <input
+              className="mt-1 rounded border-outline text-primary focus:ring-primary"
+              type="checkbox"
+              checked={form.whatsappConsent}
+              onChange={(event) => setForm((prev) => ({ ...prev, whatsappConsent: event.target.checked }))}
+              required
+            />
+            <span>
+              I agree to receive replies about this enquiry by WhatsApp. I can opt out at any time by replying STOP.
+            </span>
+          </label>
           <div className="space-y-2">
             <label className="text-xs font-bold text-outline uppercase tracking-wider">Message</label>
             <textarea

@@ -57,12 +57,12 @@ export default function FloatingContactRail() {
       icon: Phone,
       accentClass: 'bg-primary text-on-primary',
     },
-    {
+    ...(contact.email ? [{
       label: 'Email',
       href: `mailto:${contact.email}`,
       icon: Mail,
       accentClass: 'bg-secondary text-white',
-    },
+    }] : []),
     {
       label: 'Map',
       href: contact.mapsUrl ?? undefined,

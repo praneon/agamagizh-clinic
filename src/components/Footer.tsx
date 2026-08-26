@@ -46,7 +46,9 @@ export default function Footer() {
           </p>
           <div className="flex space-x-4 justify-center md:justify-start">
             <a className="text-[#5948d3] hover:opacity-80 transition-opacity" href="#"><span className="material-symbols-outlined">public</span></a>
-            <a className="text-[#5948d3] hover:opacity-80 transition-opacity" href={`mailto:${contact.email}`}><span className="material-symbols-outlined">mail</span></a>
+            {contact.email && (
+              <a className="text-[#5948d3] hover:opacity-80 transition-opacity" href={`mailto:${contact.email}`}><span className="material-symbols-outlined">mail</span></a>
+            )}
           </div>
         </div>
       </div>

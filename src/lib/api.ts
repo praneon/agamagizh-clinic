@@ -39,6 +39,7 @@ export interface AppointmentPayload {
   phone: string;
   concern?: string;
   sessionLabel?: string;
+  whatsappConsent: boolean;
 }
 
 export interface InquiryPayload {
@@ -46,6 +47,7 @@ export interface InquiryPayload {
   phone: string;
   email?: string;
   message: string;
+  whatsappConsent: boolean;
 }
 
 export const submitAppointment = (payload: AppointmentPayload) =>
