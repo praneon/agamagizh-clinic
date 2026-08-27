@@ -2,6 +2,8 @@
 // appointment/inquiry storage and WhatsApp sending. Set VITE_API_BASE_URL
 // in your .env (see .env.example) once the backend is deployed.
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '';
+const CHATWOOT_PUBLIC_API = 'https://admin.agamagizhnaturecure.com/public/api/v1';
+const CHATWOOT_WEBSITE_TOKEN = 'CqbKHGZveVSYcsHx9vLLabyg';
 export const isBackendConfigured = Boolean(API_BASE_URL);
 
 export class ApiError extends Error {
@@ -54,8 +56,27 @@ export interface InquiryPayload {
   whatsappConsent: boolean;
 }
 
-export const submitAppointment = (payload: AppointmentPayload) =>
-  post<{ id: string }>('/api/appointments', payload);
+export async function submitAppointment(payload: AppointmentPayload) {
+  const res = await fetch(`${CHATWOOT_PUBLIC_API}/appointment_requests`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      appointment_request: {
+        name: payload.name,
+        age: payload.age || null,
+        phone: payload.phone,
+        concern: payload.concern,
+        consultation_mode: payload.consultationMode,
+        preferred_date: payload.preferredDate,
+        preferred_time: payload.preferredTime,
+        whatsapp_consent: payload.whatsappConsent,
+        website_token: CHATWOOT_WEBSITE_TOKEN,
+      },
+    }),
+  });
+  if (!res.ok) throw new ApiError('We could not save your appointment request. Please call or WhatsApp us.', res.status);
+  return res.json() as Promise<{ id: number; status: string }>;
+}
 
 export const submitInquiry = (payload: InquiryPayload) =>
   post<{ id: string }>('/api/inquiries', payload);
@@ -72,7 +93,7 @@ export async function submitDataDeletionRequest(payload: DataDeletionPayload) {
   const res = await fetch('https://admin.agamagizhnaturecure.com/public/api/v1/data_deletion_requests', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ data_deletion_request: payload }),
+    body: JSON.stringify({ data_deletion_request: { ...payload, website_token: CHATWOOT_WEBSITE_TOKEN } }),
   });
   if (!res.ok) throw new ApiError('We could not submit your request. Please call or WhatsApp us.', res.status);
   return res.json() as Promise<{ id: number; status: string; message: string }>;

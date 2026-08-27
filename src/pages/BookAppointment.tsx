@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { submitAppointment, ApiError } from '../lib/api';
-import { isBackendConfigured } from '../lib/api';
 import { openChatPanel } from '../lib/chatPanel';
 import { openWhatsApp, whatsappLink } from '../lib/whatsapp';
 
@@ -39,7 +38,7 @@ const BookAppointment = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.phone.trim() || !form.preferredDate || !form.preferredTime || !form.whatsappConsent) {
+    if (!form.name.trim() || !form.phone.trim() || !form.concern.trim() || !form.preferredDate || !form.preferredTime || !form.whatsappConsent) {
       setStatus('error');
       setErrorMessage('Please provide your details, preferred slot, and confirm WhatsApp consent.');
       return;
@@ -51,7 +50,9 @@ const BookAppointment = () => {
       return;
     }
 
-    if (!isBackendConfigured) {
+    setStatus('submitting');
+    try {
+      const request = await submitAppointment(form);
       if (form.consultationMode === 'online') {
         openChatPanel('general', {
           appointment_type: 'Online video consultation',
@@ -60,6 +61,7 @@ const BookAppointment = () => {
           booking_name: form.name.trim(),
           booking_phone: form.phone.trim(),
           booking_concern: form.concern.trim() || 'Not provided',
+          appointment_reference: `#${request.id}`,
         });
         setStatus('success');
         return;
@@ -74,18 +76,9 @@ const BookAppointment = () => {
         form.age.trim() ? `Age: ${form.age.trim()}` : '',
         `Phone: ${form.phone.trim()}`,
         form.concern.trim() ? `Health concern: ${form.concern.trim()}` : '',
+        `Appointment reference: #${request.id}`,
       ].filter(Boolean).join('\n'));
-      return;
-    }
-
-    setStatus('submitting');
-    try {
-      await submitAppointment(form);
       setStatus('success');
-      setForm({
-        name: '', age: '', phone: '', concern: '', consultationMode: 'online',
-        preferredDate: '', preferredTime: '', whatsappConsent: false,
-      });
     } catch (err) {
       setStatus('error');
       setErrorMessage(err instanceof ApiError ? err.message : 'Something went wrong. Please try again.');
@@ -255,6 +248,7 @@ const BookAppointment = () => {
                   rows={3}
                   value={form.concern}
                   onChange={handleChange('concern')}
+                  required
                 ></textarea>
               </div>
               <label className="flex items-start gap-3 text-sm text-on-surface-variant">
